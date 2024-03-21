@@ -14,7 +14,7 @@ export default defineConfig(({ mode }) => {
       "__REACT_APP_STRIPE_PUBLIC_KEY__": JSON.stringify(process.env.REACT_APP_STRIPE_PUBLIC_KEY),
     } : {},
     build: {
-      outDir: '../static',
+      outDir: './dist',
       emptyOutDir: true,
     },
     server: {

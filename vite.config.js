@@ -14,6 +14,7 @@ export default defineConfig(({ mode }) => {
       "__AUTH0_AUDIENCE__": JSON.stringify(process.env.AUTH0_AUDIENCE),
       "__REACT_APP_STRIPE_CLIENT_SECRET__": JSON.stringify(process.env.REACT_APP_STRIPE_CLIENT_SECRET),
       "__REACT_APP_STRIPE_PUBLIC_KEY__": JSON.stringify(process.env.REACT_APP_STRIPE_PUBLIC_KEY),
+      "__API_URL__": JSON.stringify(process.env.API_URL),
     },
     build: {
       outDir: './dist',

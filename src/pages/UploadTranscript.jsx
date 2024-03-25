@@ -25,6 +25,7 @@ export default function UploadTranscript() {
 		uploadResponse,
 		setUploadResponse,
 		fileContent,
+		setFileContent,
 	} = useContext(UploadTranscriptContext);
 	const apiRequest = useRequest();
 

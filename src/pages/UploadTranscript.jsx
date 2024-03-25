@@ -74,7 +74,7 @@ export default function UploadTranscript() {
 					label: "Your transcript has been uploaded!",
 					showToast: true,
 				});
-				await getFileContent(uploadResponse.files[0].name);
+				getFileContent(uploadResponse.files[0].name);
 			} catch (error) {
 				setIsUploading(false);
 				setToast({

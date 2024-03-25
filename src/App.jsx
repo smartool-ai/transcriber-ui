@@ -49,7 +49,6 @@ export default function App() {
         <Route path="/upload-transcript" component={UploadTranscript} />
         <Route path="/delete-user" component={DeleteUser} />
         <Route path="/link-platforms" component={AddPlatformKeys} />
-        <Route path="/link-platforms" component={AddPlatformKeys} />
         <Route path="/user-settings" component={UserSettings} />
       </Layout>
     </Router>

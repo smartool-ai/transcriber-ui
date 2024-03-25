@@ -68,13 +68,14 @@ export default function UploadTranscript() {
 				}
 
 				setIsUploading(false);
-				setUploadResponse(await apiUploadResponse.json());
+				const uploadResponseLocal = await apiUploadResponse.json();
+				setUploadResponse(uploadResponseLocal);
 				setToast({
 					type: "success",
 					label: "Your transcript has been uploaded!",
 					showToast: true,
 				});
-				getFileContent(uploadResponse.files[0].name);
+				getFileContent(uploadResponseLocal.files[0].name);
 			} catch (error) {
 				setIsUploading(false);
 				setToast({

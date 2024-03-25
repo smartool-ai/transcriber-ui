@@ -40,7 +40,7 @@ export default function UploadTranscript() {
 
 		if (res.status === 200) {
 			const fileContent = await res.json();
-			setFileContent(fileContent);
+			setFileContent(fileContent.content);
 		} else {
 			setToast({
 				type: "error",
@@ -74,7 +74,7 @@ export default function UploadTranscript() {
 					label: "Your transcript has been uploaded!",
 					showToast: true,
 				});
-				await getFileContent(fileName);
+				await getFileContent(uploadResponse.files[0].name);
 			} catch (error) {
 				setIsUploading(false);
 				setToast({

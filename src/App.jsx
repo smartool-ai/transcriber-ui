@@ -33,23 +33,25 @@ export default function App() {
   const userFirstName = user && user.name.split(" ")[0];
 
   if (isLoading) {
-    return <Spinner />
-  } else if (isAuthenticated) {
-    return (
-      <Router hook={useHashLocation}>
-        <Layout current={location} token={token}>
-          <Route path="/">
-            <HomePage userFirstName={userFirstName}/>
-          </Route>
-          <Route path="/upload-transcript" component={UploadTranscript} />
-          <Route path="/delete-user" component={DeleteUser} />
-          <Route path="/link-platforms" component={AddPlatformKeys} />
-          <Route path="/link-platforms" component={AddPlatformKeys} />
-          <Route path="/user-settings" component={UserSettings} />
-        </Layout>
-      </Router>
-    )
-  } else {
+    return <Spinner />;
+  }
+
+  if (!isAuthenticated) {
     return <WelcomePage loginWithPopup={loginWithPopup} />
   }
+
+  return (
+    <Router hook={useHashLocation}>
+      <Layout current={location} token={token}>
+        <Route path="/">
+          <HomePage userFirstName={userFirstName}/>
+        </Route>
+        <Route path="/upload-transcript" component={UploadTranscript} />
+        <Route path="/delete-user" component={DeleteUser} />
+        <Route path="/link-platforms" component={AddPlatformKeys} />
+        <Route path="/link-platforms" component={AddPlatformKeys} />
+        <Route path="/user-settings" component={UserSettings} />
+      </Layout>
+    </Router>
+  )
 }

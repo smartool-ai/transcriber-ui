@@ -10,7 +10,7 @@ import {
   CogIcon
 } from '@heroicons/react/24/outline';
 import { Link } from "wouter";
-import Logo from './Logo';
+import Logo from '../Logo';
 import * as styles from "./Layout.tailwind.js";
 
 const navigation = [

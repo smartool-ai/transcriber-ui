@@ -3,14 +3,14 @@ import { useEffect, useState } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
 import { Router, Route } from "wouter";
 import useHashLocation from './hooks/useHashLocation';
-import Spinner from './Spinner';
+import Spinner from './components/Spinner';
 import Layout from './components/layout/Layout.jsx';
-import UploadTranscript from './views/UploadTranscript';
-import DeleteUser from './views/DeleteUser';
-import WelcomePage from './views/WelcomePage';
-import HomePage from './views/HomePage';
-import AddPlatformKeys from './views/AddPlatformKeys';
-import UserSettings from './views/UserSettings';
+import UploadTranscript from './pages/UploadTranscript';
+import DeleteUser from './pages/DeleteUser';
+import WelcomePage from './pages/WelcomePage';
+import HomePage from './pages/HomePage';
+import AddPlatformKeys from './pages/AddPlatformKeys';
+import UserSettings from './pages/UserSettings';
 
 export default function App() {
   const {

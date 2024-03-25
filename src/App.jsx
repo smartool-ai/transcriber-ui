@@ -2,15 +2,15 @@ import { jwtDecode } from 'jwt-decode';
 import { useEffect, useState } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
 import { Router, Route } from "wouter";
-import useHashLocation from '../hooks/useHashLocation';
+import useHashLocation from './hooks/useHashLocation';
 import Spinner from './Spinner';
-import Layout from './Layout';
-import UploadTranscript from '../views/UploadTranscript';
-import DeleteUser from '../views/DeleteUser';
-import WelcomePage from './WelcomePage';
-import HomePage from './HomePage';
-import AddPlatformKeys from '../views/AddPlatformKeys';
-import UserSettings from '../views/UserSettings';
+import Layout from './components/layout/Layout.jsx';
+import UploadTranscript from './views/UploadTranscript';
+import DeleteUser from './views/DeleteUser';
+import WelcomePage from './views/WelcomePage';
+import HomePage from './views/HomePage';
+import AddPlatformKeys from './views/AddPlatformKeys';
+import UserSettings from './views/UserSettings';
 
 export default function App() {
   const {

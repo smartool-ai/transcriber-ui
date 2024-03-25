@@ -333,9 +333,9 @@ export default function UploadTranscript() {
 					</div>
 					
 					{fileContent && (
-						<div>
+						<div className={styles.transcriptContent_tw}>
 							<h3>File Content:</h3>
-							<pre style={{ overflow: 'auto', background: 'white' }}>{fileContent}</pre>
+							<pre style={{ overflow: 'auto', background: 'white', height: '30px' }}>{fileContent}</pre>
 						</div>
 					)}
 					{ticketsResponse && (

@@ -5,12 +5,15 @@ export const UploadTranscriptContext = createContext({
 	setTicketsResponse: null,
 	uploadResponse: {},
 	setUploadResponse: null,
+	fileContent: {},
+	setFileContent: null,
 });
 
 export function UploadTranscriptContextProvider({ children }) {
 	const [uploadResponse, setUploadResponse] = useState(null);
 	const [generationResponse, setGenerationResponse] = useState(null);
 	const [ticketsResponse, setTicketsResponse] = useState(null);
+	const [fileContent, setFileContent] = useState(null);
 
 	return (
 		<UploadTranscriptContext.Provider value={{
@@ -20,6 +23,8 @@ export function UploadTranscriptContextProvider({ children }) {
 			setTicketsResponse,
 			uploadResponse,
 			setUploadResponse,
+			fileContent,
+			setFileContent
 		}}>
 			{children}
 		</UploadTranscriptContext.Provider>

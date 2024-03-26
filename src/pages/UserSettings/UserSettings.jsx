@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import {useUserContext} from "../../context/UserContext.jsx";
+import {classNames} from "../../utils/tailwindUtils.js";
 // import Payment from "../components/Payment";
 // import { Elements } from '@stripe/react-stripe-js';
 // import {loadStripe} from '@stripe/stripe-js';
@@ -11,8 +12,15 @@ import {useUserContext} from "../../context/UserContext.jsx";
 
 const UserSettings = () => {
     const { fullName } = useUserContext();
-    const [name, setName] = useState(fullName.state);
-    const [email, setEmail] = useState('');
+    const [name, setName] = useState('');
+
+    useEffect(() => {
+        if (name !== fullName.state) {
+            setName(fullName.state)
+        }
+    }, [fullName.state]);
+
+    const submitButtonDisabled = name === fullName.state;
 
     const handleNameChange = (e) => {
         setName(e.target.value);
@@ -24,9 +32,9 @@ const UserSettings = () => {
     };
 
     return (
-        <div>
-            <h1 className="h1 mb-6">User Settings</h1>
-            <form onSubmit={handleSubmit}>
+        <div className="flex flex-col space-y-20">
+            <h1 className="h1">User Settings</h1>
+            <form className="flex flex-col space-y-10" onSubmit={handleSubmit}>
                 <div className="flex space-x-4 items-center">
                     <label className="label">Name:</label>
                     <input
@@ -36,9 +44,23 @@ const UserSettings = () => {
                       value={name}
                     />
                 </div>
-                <br/>
-                <button className="btn" type="submit">Save</button>
+                <div>
+                    <button
+                      className={classNames(
+                        submitButtonDisabled ? 'btn-disabled' : '',
+                        "btn"
+                      )}
+                      disabled={submitButtonDisabled}
+                      type="submit"
+                    >
+                        Save
+                    </button>
+                </div>
             </form>
+            <div className="flex flex-col space-y-4">
+                <a className="link">Reset Email</a>
+                <a className="link">Reset Password</a>
+            </div>
         </div>
     );
 };

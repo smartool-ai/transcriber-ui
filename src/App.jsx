@@ -10,7 +10,7 @@ import DeleteUser from './pages/DeleteUser';
 import WelcomePage from './pages/WelcomePage';
 import HomePage from './pages/HomePage';
 import AddPlatformKeys from './pages/AddPlatformKeys';
-import UserSettings from './pages/UserSettings';
+import UserSettings from './pages/UserSettings/UserSettings.jsx';
 
 export default function App() {
   const {

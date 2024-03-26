@@ -1,3 +1,40 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+    /* Buttons */
+    .btn {
+        @apply
+        rounded-md
+        bg-blue-600
+        px-5
+        py-2.5
+        text-lg
+        font-semibold
+        text-white
+        hover:bg-[#4654A3]
+        focus-visible:outline
+        focus-visible:outline-2
+        focus-visible:outline-offset-2
+        focus-visible:outline-blue-600
+    }
+
+    /* Inputs */
+    .input {
+        @apply
+        rounded-md
+        text-black
+    }
+
+    /* Text */
+    .h1 {
+        @apply
+        text-white
+        text-2xl
+    }
+    .label {
+        @apply
+        text-white
+    }
+}

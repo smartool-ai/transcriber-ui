@@ -2,11 +2,11 @@ import {useUserContext} from "../context/UserContext.jsx";
 
 
 export default function HomePage() {
-	const { state } = useUserContext().firstName;
+	const { firstName } = useUserContext();
 
 	return (
 		<div className="text-2xl font-semibold text-white">
-			{`Hello, ${state}!`}
+			{`Hello, ${firstName.state}!`}
 		</div>
 	)
 }

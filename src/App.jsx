@@ -17,7 +17,6 @@ export default function App() {
   const {
     isAuthenticated,
     isLoading,
-    loginWithPopup,
     user,
     getAccessTokenSilently
   } = useAuth0();
@@ -42,7 +41,7 @@ export default function App() {
   }
 
   if (!isAuthenticated) {
-    return <WelcomePage loginWithPopup={loginWithPopup} />
+    return <WelcomePage />
   }
 
   return (

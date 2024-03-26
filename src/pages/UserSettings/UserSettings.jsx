@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import {useUserContext} from "../../context/UserContext.jsx";
 import {classNames} from "../../utils/tailwindUtils.js";
 // import Payment from "../components/Payment";
@@ -12,9 +12,16 @@ import {classNames} from "../../utils/tailwindUtils.js";
 
 const UserSettings = () => {
     const { fullName } = useUserContext();
-    const [name, setName] = useState(fullName.state);
+    const [name, setName] = useState('');
     const [email, setEmail] = useState('');
-    const [submitDisabled, setSubmitDisabled] = useState(true);
+
+    useEffect(() => {
+        if (name !== fullName.state) {
+            setName(fullName.state)
+        }
+    }, [fullName.state]);
+
+    const submitButtonDisabled = name === fullName.state;
 
     const handleNameChange = (e) => {
         setName(e.target.value);
@@ -41,10 +48,10 @@ const UserSettings = () => {
                 <br/>
                 <button
                   className={classNames(
-                    submitDisabled ? 'btn-disabled' : '',
+                    submitButtonDisabled ? 'btn-disabled' : '',
                     "btn"
                   )}
-                  disabled={submitDisabled}
+                  disabled={submitButtonDisabled}
                   type="submit"
                 >
                     Save

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import {useUserContext} from "../../context/UserContext.jsx";
+import {classNames} from "../../utils/tailwindUtils.js";
 // import Payment from "../components/Payment";
 // import { Elements } from '@stripe/react-stripe-js';
 // import {loadStripe} from '@stripe/stripe-js';
@@ -13,6 +14,7 @@ const UserSettings = () => {
     const { fullName } = useUserContext();
     const [name, setName] = useState(fullName.state);
     const [email, setEmail] = useState('');
+    const [submitDisabled, setSubmitDisabled] = useState(true);
 
     const handleNameChange = (e) => {
         setName(e.target.value);
@@ -37,7 +39,16 @@ const UserSettings = () => {
                     />
                 </div>
                 <br/>
-                <button className="btn" type="submit">Save</button>
+                <button
+                  className={classNames(
+                    submitDisabled ? 'btn-disabled' : '',
+                    "btn"
+                  )}
+                  disabled={submitDisabled}
+                  type="submit"
+                >
+                    Save
+                </button>
             </form>
         </div>
     );

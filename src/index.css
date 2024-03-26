@@ -20,6 +20,13 @@
         focus-visible:outline-blue-600
     }
 
+    .btn-disabled {
+        background-image: linear-gradient(rgb(255 255 255/60%) 0 0);
+        @apply
+        hover:bg-blue-600
+        !cursor-not-allowed
+    }
+
     /* Inputs */
     .input {
         @apply

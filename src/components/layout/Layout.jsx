@@ -10,6 +10,7 @@ import {
   CogIcon
 } from '@heroicons/react/24/outline';
 import { Link } from "wouter";
+import { classNames } from "../../utils/tailwindUtils.js";
 import Logo from '../Logo';
 import * as styles from "./Layout.tailwind.js";
 
@@ -18,10 +19,6 @@ const navigation = [
   { name: 'Delete User', href: '/delete-user', icon: UserMinusIcon, permission: 'manage:users' },
   { name: 'Link Platforms', href: '/link-platforms', icon: CubeIcon, permission: 'manage:platforms' },
 ];
-
-function classNames(...classes) {
-  return classes.filter(Boolean).join(' ');
-};
 
 export default function Layout({ current, token, children }) {
   const {

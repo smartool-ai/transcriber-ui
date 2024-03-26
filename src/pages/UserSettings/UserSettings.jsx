@@ -13,7 +13,6 @@ import {classNames} from "../../utils/tailwindUtils.js";
 const UserSettings = () => {
     const { fullName } = useUserContext();
     const [name, setName] = useState('');
-    const [email, setEmail] = useState('');
 
     useEffect(() => {
         if (name !== fullName.state) {
@@ -33,9 +32,9 @@ const UserSettings = () => {
     };
 
     return (
-        <div>
-            <h1 className="h1 mb-6">User Settings</h1>
-            <form onSubmit={handleSubmit}>
+        <div className="flex flex-col space-y-20">
+            <h1 className="h1">User Settings</h1>
+            <form className="flex flex-col space-y-10" onSubmit={handleSubmit}>
                 <div className="flex space-x-4 items-center">
                     <label className="label">Name:</label>
                     <input
@@ -45,18 +44,23 @@ const UserSettings = () => {
                       value={name}
                     />
                 </div>
-                <br/>
-                <button
-                  className={classNames(
-                    submitButtonDisabled ? 'btn-disabled' : '',
-                    "btn"
-                  )}
-                  disabled={submitButtonDisabled}
-                  type="submit"
-                >
-                    Save
-                </button>
+                <div>
+                    <button
+                      className={classNames(
+                        submitButtonDisabled ? 'btn-disabled' : '',
+                        "btn"
+                      )}
+                      disabled={submitButtonDisabled}
+                      type="submit"
+                    >
+                        Save
+                    </button>
+                </div>
             </form>
+            <div className="flex flex-col space-y-4">
+                <a className="link">Reset Email</a>
+                <a className="link">Reset Password</a>
+            </div>
         </div>
     );
 };

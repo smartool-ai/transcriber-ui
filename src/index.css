@@ -27,6 +27,13 @@
         !cursor-not-allowed
     }
 
+    .link {
+        @apply
+        text-white
+        cursor-pointer
+        hover:underline
+    }
+
     /* Inputs */
     .input {
         @apply

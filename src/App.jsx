@@ -33,7 +33,6 @@ export default function App() {
   }, [isAuthenticated, isLoading, user]);
 
   if (user) {
-    console.log(user.name)
     firstName.setState(user.name.split(" ")[0]);
     fullName.setState(user.name);
   }

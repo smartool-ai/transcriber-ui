@@ -11,15 +11,11 @@ import {useUserContext} from "../../context/UserContext.jsx";
 
 const UserSettings = () => {
     const { fullName } = useUserContext();
-    const [name, setName] = useState(fullName);
+    const [name, setName] = useState(fullName.state);
     const [email, setEmail] = useState('');
 
     const handleNameChange = (e) => {
         setName(e.target.value);
-    };
-
-    const handleEmailChange = (e) => {
-        setEmail(e.target.value);
     };
 
     const handleSubmit = (e) => {

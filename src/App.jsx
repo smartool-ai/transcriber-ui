@@ -11,6 +11,7 @@ import WelcomePage from './pages/WelcomePage';
 import HomePage from './pages/HomePage';
 import AddPlatformKeys from './pages/AddPlatformKeys';
 import UserSettings from './pages/UserSettings/UserSettings.jsx';
+import {useUserContext} from "./context/UserContext.jsx";
 
 export default function App() {
   const {
@@ -23,6 +24,7 @@ export default function App() {
 
   const [token, setToken] = useState(null);
   const [location] = useHashLocation();
+  const { firstName, fullName } = useUserContext();
 
   useEffect(() => {
     if (isAuthenticated && !isLoading && !token) {
@@ -30,7 +32,10 @@ export default function App() {
     }
   }, [isAuthenticated, isLoading, user]);
 
-  const userFirstName = user && user.name.split(" ")[0];
+  if (user) {
+    firstName.setState(user.name.split(" ")[0]);
+    fullName.setState(user.name);
+  }
 
   if (isLoading) {
     return <Spinner />;
@@ -44,7 +49,7 @@ export default function App() {
     <Router hook={useHashLocation}>
       <Layout current={location} token={token}>
         <Route path="/">
-          <HomePage userFirstName={userFirstName}/>
+          <HomePage/>
         </Route>
         <Route path="/upload-transcript" component={UploadTranscript} />
         <Route path="/delete-user" component={DeleteUser} />

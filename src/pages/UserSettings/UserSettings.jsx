@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import {useUserContext} from "../../context/UserContext.jsx";
 // import Payment from "../components/Payment";
 // import { Elements } from '@stripe/react-stripe-js';
 // import {loadStripe} from '@stripe/stripe-js';
@@ -9,7 +10,8 @@ import React, { useState } from 'react';
 // }
 
 const UserSettings = () => {
-    const [name, setName] = useState('');
+    const { fullName } = useUserContext();
+    const [name, setName] = useState(fullName);
     const [email, setEmail] = useState('');
 
     const handleNameChange = (e) => {

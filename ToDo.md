@@ -9,6 +9,8 @@ Meeting with Jake:
 * app initialization layer ... use user info to determine apps that can be selected
 * Show number of generations remaining
 * Write sample TDD
+  * input prompts and output structure
+  * What components will be affected, updated, deleted, added
 
 User Settings
 * How to submit change to name via BE?

@@ -1,12 +1,14 @@
 import Logo from '../components/Logo';
+import {useAuth0} from "@auth0/auth0-react";
 
-export default function WelcomePage({ loginWithRedirect }) {
+export default function WelcomePage() {
+	const { loginWithRedirect } = useAuth0();
 	return (
 		<div className="h-full w-full flex flex-col items-center justify-center gap-y-6">
 			<Logo />
 			<button
 				onClick={() => loginWithRedirect()}
-				className="rounded-md bg-blue-600 px-5 py-2.5 text-lg font-semibold text-white hover:bg-[#4654A3] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+				className="btn"
 			>
 				Sign in
 			</button>

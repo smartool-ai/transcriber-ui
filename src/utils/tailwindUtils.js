@@ -2,6 +2,8 @@ export const strCombine = (...args) => args.join(' ');
 
 export const twConditional = (conditional, style) => (conditional ? style : '');
 
+export const classNames = (...classes) => classes.filter(Boolean).join(' ');
+
 /**
  const tailwindClasses = {
     default: 'text-black',

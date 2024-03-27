@@ -16,7 +16,7 @@ export default function App() {
   const {
     isAuthenticated,
     isLoading,
-    loginWithPopup,
+    loginWithRedirect,
     user,
     getAccessTokenSilently
   } = useAuth0();
@@ -37,7 +37,7 @@ export default function App() {
   }
 
   if (!isAuthenticated) {
-    return <WelcomePage loginWithPopup={loginWithPopup} />
+    return <WelcomePage loginWithRedirect={loginWithRedirect} />
   }
 
   return (

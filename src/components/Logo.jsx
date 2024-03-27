@@ -23,7 +23,7 @@ export default function Logo({ inverted, size = "lg" }) {
       <img
         className={logoSizes[size]}
         src={inverted ? logoInverted : logo}
-        alt="Transcriber"
+        alt="Smartool"
       />
     </div>
   )

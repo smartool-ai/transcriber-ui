@@ -168,7 +168,7 @@ const NavItem = ({
       <Link href="/" onClick={() => setSidebarOpen(false)}>
         <div className={styles.logo_tw}>
           <Logo inverted={true} size="sm" />
-          <h1 className={styles.logoName_tw}>Transcriber</h1>
+          <h1 className={styles.logoName_tw}>Smartool</h1>
         </div>
       </Link>
       <nav className={styles.navContainer_tw}>

@@ -15,7 +15,7 @@ import Logo from '../Logo';
 import * as styles from "./Layout.tailwind.js";
 
 const navigation = [
-  { name: 'Upload Transcript', href: '/upload-transcript', icon: FolderIcon, permission: 'manage:upload_transcripts' },
+  { name: 'Transcriber', href: '/upload-transcript', icon: FolderIcon, permission: 'manage:upload_transcripts' },
   { name: 'Delete User', href: '/delete-user', icon: UserMinusIcon, permission: 'manage:users' },
   { name: 'Link Platforms', href: '/link-platforms', icon: CubeIcon, permission: 'manage:platforms' },
 ];

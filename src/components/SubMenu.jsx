@@ -15,7 +15,7 @@ const SubMenu = ({ routes }) => {
             location === route.path ? 'an-active' : ''
           )}
         >
-          {route.label}
+          {route.name}
         </Link>
       ))}
     </div>

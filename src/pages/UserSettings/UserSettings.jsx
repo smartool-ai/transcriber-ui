@@ -58,7 +58,6 @@ const UserSettings = () => {
                 </div>
             </form>
             <div className="flex flex-col space-y-4">
-                <a className="link">Reset Email</a>
                 <a className="link">Reset Password</a>
             </div>
         </div>

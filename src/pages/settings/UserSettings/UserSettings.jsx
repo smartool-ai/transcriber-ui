@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
-import {useUserContext} from "../../context/UserContext.jsx";
-import {classNames} from "../../utils/tailwindUtils.js";
-import SubMenu from "../../components/SubMenu.jsx";
+import {useUserContext} from "../../../context/UserContext.jsx";
+import {classNames} from "../../../utils/tailwindUtils.js";
+import SubMenu from "../../../components/SubMenu.jsx";
 // import Payment from "../components/Payment";
 // import { Elements } from '@stripe/react-stripe-js';
 // import {loadStripe} from '@stripe/stripe-js';

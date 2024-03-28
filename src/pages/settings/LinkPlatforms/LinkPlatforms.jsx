@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import useRequest from '../../hooks/useRequest';
+import useRequest from '../../../hooks/useRequest';
 
 const LinkPlatforms = () => {
   const [platform, setPlatform] = useState('');

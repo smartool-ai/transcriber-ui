@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import useRequest from '../hooks/useRequest';
+import useRequest from '../../hooks/useRequest';
 
-const AddPlatformKeys = () => {
+const LinkPlatforms = () => {
   const [platform, setPlatform] = useState('');
   const [email, setEmail] = useState(null);
   const [server, setServer] = useState(null);
@@ -203,4 +203,4 @@ const AddPlatformKeys = () => {
   );
 };
 
-export default AddPlatformKeys;
+export default LinkPlatforms;

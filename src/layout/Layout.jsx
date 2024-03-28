@@ -9,10 +9,10 @@ import {
   CogIcon
 } from '@heroicons/react/24/outline';
 import { Link } from "wouter";
-import { classNames } from "../../utils/tailwindUtils.js";
-import Logo from '../Logo';
+import { classNames } from "../utils/tailwindUtils.js";
+import Logo from '../components/Logo';
 import * as styles from "./Layout.tailwind.js";
-import {useUserContext} from "../../context/UserContext.jsx";
+import {useUserContext} from "../context/UserContext.jsx";
 
 const navigation = [
   { name: 'Upload Transcript', href: '/upload-transcript', icon: FolderIcon, permission: 'manage:upload_transcripts' },

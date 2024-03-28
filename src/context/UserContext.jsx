@@ -1,6 +1,10 @@
 import { createContext, useContext, useState } from 'react'
 
 export const UserContext = createContext({
+  permissions: {
+    setState: () => {},
+    state: null,
+  },
   token: {
     setState: () => {},
     state: null,
@@ -12,13 +16,23 @@ export const UserContext = createContext({
 });
 
 export const UserContextProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
+  const [permissions, setPermissions] = useState(null);
   const [token, setToken] = useState(null);
+  const [user, setUser] = useState(null);
+
+  const handleToken = (token) => {
+    setPermissions(token.permissions);
+    setToken(token);
+  };
 
   return (
     <UserContext.Provider value={{
+      permissions: {
+        setState: setPermissions,
+        state: permissions,
+      },
       token: {
-        setState: setToken,
+        setState: handleToken,
         state: token,
       },
       user: {

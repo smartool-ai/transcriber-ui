@@ -12,9 +12,16 @@ const InitApp = ({ children }) => {
     getAccessTokenSilently
   } = useAuth0();
 
-  const { token, user } = useUserContext();
+  const {
+    permissions,
+    token,
+    user,
+  } = useUserContext();
 
-  const isInitialized = !!user.state && !!token.state;
+  const isInitialized =
+    !!permissions.state
+    && !!token.state
+    && !!user.state;
 
   if (isLoading) {
     return <Spinner />;

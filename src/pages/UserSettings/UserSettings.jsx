@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {useUserContext} from "../../context/UserContext.jsx";
 import {classNames} from "../../utils/tailwindUtils.js";
-import SubMenu from "./SubMenu.jsx";
+import SubMenu from "../../components/SubMenu.jsx";
 // import Payment from "../components/Payment";
 // import { Elements } from '@stripe/react-stripe-js';
 // import {loadStripe} from '@stripe/stripe-js';
@@ -32,9 +32,14 @@ const UserSettings = () => {
         // Add your logic here to update user settings
     };
 
+    const subMenuRoutes = [
+        { path: '/settings/link-platforms', label: 'Link Platforms' },
+        { path: '/settings/user-settings', label: 'User Settings' },
+    ];
+
     return (
         <div className="flex flex-col space-y-20">
-            <SubMenu />
+            <SubMenu routes={subMenuRoutes} />
             <h1 className="h1">User Settings</h1>
             <form className="flex flex-col space-y-10" onSubmit={handleSubmit}>
                 <div className="flex space-x-4 items-center">

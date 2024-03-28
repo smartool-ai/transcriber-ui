@@ -47,13 +47,11 @@ export default function App() {
   return (
     <Router hook={useHashLocation}>
       <Layout current={location} token={token}>
-        <Route path="/">
-          <HomePage/>
-        </Route>
+        <Route path="/" component={HomePage} />
         <Route path="/upload-transcript" component={UploadTranscript} />
         <Route path="/delete-user" component={DeleteUser} />
-        <Route path="/link-platforms" component={AddPlatformKeys} />
-        <Route path="/user-settings" component={UserSettings} />
+        <Route path="/settings/link-platforms" component={AddPlatformKeys} />
+        <Route path="/settings/user-settings" component={UserSettings} />
       </Layout>
     </Router>
   )

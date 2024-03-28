@@ -18,18 +18,18 @@ const routeConfigs = [
     permission: 'manage:users',
   },
   {
-    name: 'User Settings',
-    settingsNavigation: true,
-    sidePanel: false,
-    path: '/settings/user-settings',
-    permission: true,
-  },
-  {
     name: 'Link Platforms',
     settingsNavigation: true,
     sidePanel: false,
     path: '/settings/link-platforms',
     permission: 'manage:platforms',
+  },
+  {
+    name: 'User Settings',
+    settingsNavigation: true,
+    sidePanel: false,
+    path: '/settings/user-settings',
+    permission: true,
   },
 ];
 

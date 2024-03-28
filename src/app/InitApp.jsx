@@ -3,8 +3,9 @@ import { useAuth0 } from '@auth0/auth0-react';
 import Spinner from '../components/Spinner';
 import WelcomePage from '../pages/WelcomePage';
 import {useUserContext} from "../context/UserContext.jsx";
+import App from "./App.jsx";
 
-const InitApp = ({ children }) => {
+const InitApp = () => {
   const {
     isAuthenticated,
     isLoading,
@@ -37,7 +38,7 @@ const InitApp = ({ children }) => {
   }
 
   if (isInitialized) {
-    return <Spinner message="I did it "/>;
+    return <App />;
   }
 
   return <Spinner message="Initializing..." />;

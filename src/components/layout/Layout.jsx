@@ -12,13 +12,15 @@ import { Link } from "wouter";
 import { classNames } from "../../utils/tailwindUtils.js";
 import Logo from '../Logo';
 import * as styles from "./Layout.tailwind.js";
+import {useUserContext} from "../../context/UserContext.jsx";
 
 const navigation = [
   { name: 'Upload Transcript', href: '/upload-transcript', icon: FolderIcon, permission: 'manage:upload_transcripts' },
   { name: 'Delete User', href: '/delete-user', icon: UserMinusIcon, permission: 'manage:users' },
 ];
 
-export default function Layout({ current, token, children }) {
+export default function Layout({ current, children }) {
+  const { token } = useUserContext();
   const {
     user,
     logout,

@@ -87,27 +87,14 @@ export default function Layout({ current, children }) {
                     </button>
                   </div>
                 </Transition.Child>
-                <NavMenu
-                  currentNavigation={currentNavigation}
-                  logout={logout}
-                  user={user}
-                  setSidebarOpen={setSidebarOpen}
-                />
+                <NavMenu setSidebarOpen={setSidebarOpen} />
               </Dialog.Panel>
             </Transition.Child>
           </div>
         </Dialog>
       </Transition.Root>
       <div className={styles.sideNav_tw}>
-        <NavMenu
-          current={current}
-          currentNavigation={currentNavigation}
-          logout={logout}
-          token={token}
-          permittedNavigation={permittedNavigation}
-          user={user}
-          setSidebarOpen={setSidebarOpen}
-        />
+        <NavMenu setSidebarOpen={setSidebarOpen} />
       </div>
       <div className={styles.topNav_tw}>
         <button type="button" className={styles.hamburgerIcon_tw} onClick={() => setSidebarOpen(true)}>

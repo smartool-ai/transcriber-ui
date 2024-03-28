@@ -4,14 +4,12 @@ import Logo from '../components/Logo';
 import * as styles from "./Layout.tailwind.js";
 import {useUserContext} from "../context/UserContext.jsx";
 import routeConfigs from "../app/routeConfigs.js";
+import {useAuth0} from "@auth0/auth0-react";
 
-const NavMenu = ({
-  logout,
-  user,
-  setSidebarOpen,
-}) => {
+const NavMenu = ({ setSidebarOpen }) => {
+  const { logout } = useAuth0();
   const [location] = useLocation();
-  const { permissions } = useUserContext();
+  const { permissions, user } = useUserContext();
 
   const navItems = routeConfigs.filter((config) => (
     config.sidePanel
@@ -49,12 +47,12 @@ const NavMenu = ({
       <div className={styles.profileAndSignOutContainer_tw}>
         <img
           className={styles.avatar_tw}
-          src={user.picture}
+          src={user.state.picture}
           alt="User Avatar"
         />
         <div className={styles.logoutContainer_tw}>
           <span className="sr-only">Your profile</span>
-          <span aria-hidden="true">{user.name}</span>
+          <span aria-hidden="true">{user.state.name}</span>
           <button
             onClick={() => logout({ returnTo: window.location.origin })}
             className={styles.logoutButton_tw}

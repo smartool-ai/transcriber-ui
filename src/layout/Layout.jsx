@@ -6,13 +6,13 @@ import {
   UserMinusIcon,
   XMarkIcon,
   FolderIcon,
-  CogIcon
 } from '@heroicons/react/24/outline';
 import { Link } from "wouter";
 import { classNames } from "../utils/tailwindUtils.js";
 import Logo from '../components/Logo';
 import * as styles from "./Layout.tailwind.js";
 import {useUserContext} from "../context/UserContext.jsx";
+import routeConfigs from "../app/routeConfigs.js";
 
 const navigation = [
   { name: 'Upload Transcript', href: '/upload-transcript', icon: FolderIcon, permission: 'manage:upload_transcripts' },
@@ -20,7 +20,7 @@ const navigation = [
 ];
 
 export default function Layout({ current, children }) {
-  const { token } = useUserContext();
+  const { permissions, token } = useUserContext();
   const {
     user,
     logout,
@@ -28,7 +28,12 @@ export default function Layout({ current, children }) {
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
-  const currentNavigation = navigation.find((item) => current.startsWith(item.href));
+  const currentNavigation = routeConfigs.find((config) => current.startsWith(config.href));
+
+  const navItems = routeConfigs.filter((config) => (
+    config.sidePanel
+    && (config.permission === true || permissions.state.includes(config.permission))
+  ));
 
   const permittedNavigation = navigation.filter((item) => {
     if (item.permission && token && token.permissions) {
@@ -37,6 +42,9 @@ export default function Layout({ current, children }) {
       return true;
     };
   });
+
+  console.log(navItems)
+  console.log(permittedNavigation)
 
   return (
     <>
@@ -53,7 +61,6 @@ export default function Layout({ current, children }) {
           >
             <div className="fixed inset-0 bg-gray-900/80" />
           </Transition.Child>
-
           <div className="fixed inset-0 flex">
             <Transition.Child
               as={Fragment}
@@ -82,7 +89,6 @@ export default function Layout({ current, children }) {
                   </div>
                 </Transition.Child>
                 <NavItem
-                  classNames={classNames}
                   current={current}
                   currentNavigation={currentNavigation}
                   logout={logout}
@@ -98,7 +104,6 @@ export default function Layout({ current, children }) {
       </Transition.Root>
       <div className={styles.sideNav_tw}>
         <NavItem
-          classNames={classNames}
           current={current}
           currentNavigation={currentNavigation}
           logout={logout}
@@ -160,16 +165,17 @@ export default function Layout({ current, children }) {
 };
 
 const NavItem = ({
-  classNames,
-  current,
   currentNavigation,
-  permittedNavigation,
   logout,
-  token,
   user,
   setSidebarOpen,
 }) => {
-  const linkPlatformsPermission = token?.permissions?.includes('manage:platforms');
+  const { permissions } = useUserContext();
+
+  const navItems = routeConfigs.filter((config) => (
+    config.sidePanel
+    && (config.permission === true || permissions.state.includes(config.permission))
+  ));
 
   return (
     <div className={styles.sidebarContainer_tw}>
@@ -181,10 +187,10 @@ const NavItem = ({
       </Link>
       <nav className={styles.navContainer_tw}>
         <ul role="list">
-          {permittedNavigation.map((item) => (
+          {navItems.map((item) => (
             <li key={item.name} onClick={() => setSidebarOpen(false)} >
               <Link
-                href={item.href}
+                href={item.path}
                 className={classNames(
                   currentNavigation && currentNavigation.href == item.href
                     ? 'bg-gray-800 text-white'
@@ -197,20 +203,20 @@ const NavItem = ({
               </Link>
             </li>
           ))}
-            <li>
-              <Link
-                href={ linkPlatformsPermission ?  "/settings/link-platforms" : '/settings/user-settings' }
-                className={classNames(
-                  current.includes('/settings')
-                    ? "bg-gray-800 text-white"
-                    : "text-gray-400 hover:text-white hover:bg-gray-800",
-                  styles.navItem_tw
-                )}
-              >
-                <CogIcon className="h-6 w-6 shrink-0" aria-hidden="true" />
-                Settings
-              </Link>
-            </li>
+            {/*<li>*/}
+            {/*  <Link*/}
+            {/*    href={ linkPlatformsPermission ?  "/settings/link-platforms" : '/settings/user-settings' }*/}
+            {/*    className={classNames(*/}
+            {/*      current.includes('/settings')*/}
+            {/*        ? "bg-gray-800 text-white"*/}
+            {/*        : "text-gray-400 hover:text-white hover:bg-gray-800",*/}
+            {/*      styles.navItem_tw*/}
+            {/*    )}*/}
+            {/*  >*/}
+            {/*    <CogIcon className="h-6 w-6 shrink-0" aria-hidden="true" />*/}
+            {/*    Settings*/}
+            {/*  </Link>*/}
+            {/*</li>*/}
         </ul>
       </nav>
       <div className={styles.profileAndSignOutContainer_tw}>

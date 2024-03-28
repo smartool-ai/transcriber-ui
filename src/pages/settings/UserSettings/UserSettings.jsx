@@ -12,16 +12,16 @@ import SettingsLayout from "../SettingsLayout.jsx";
 // }
 
 const UserSettings = () => {
-    const { fullName } = useUserContext();
+    const { user } = useUserContext();
     const [name, setName] = useState('');
 
     useEffect(() => {
-        if (name !== fullName.state) {
-            setName(fullName.state)
+        if (name !== user.state.name) {
+            setName(user.state.name)
         }
-    }, [fullName.state]);
+    }, [user.state]);
 
-    const submitButtonDisabled = name === fullName.state;
+    const submitButtonDisabled = name === user.state.name;
 
     const handleNameChange = (e) => {
         setName(e.target.value);

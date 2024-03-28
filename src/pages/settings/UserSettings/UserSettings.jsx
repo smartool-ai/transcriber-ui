@@ -34,8 +34,7 @@ const UserSettings = () => {
 
     return (
       <SettingsLayout>
-          <div>
-              <h1 className="h1">User Settings</h1>
+          <div className="flex flex-col space-y-8">
               <form className="flex flex-col space-y-10" onSubmit={handleSubmit}>
                   <div className="flex space-x-4 items-center">
                       <label className="label">Name:</label>

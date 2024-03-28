@@ -3,7 +3,6 @@ import { Fragment, useState } from 'react';
 import { Dialog, Menu, Transition } from '@headlessui/react';
 import {
   Bars3Icon,
-  CubeIcon,
   UserMinusIcon,
   XMarkIcon,
   FolderIcon,
@@ -17,7 +16,6 @@ import * as styles from "./Layout.tailwind.js";
 const navigation = [
   { name: 'Upload Transcript', href: '/upload-transcript', icon: FolderIcon, permission: 'manage:upload_transcripts' },
   { name: 'Delete User', href: '/delete-user', icon: UserMinusIcon, permission: 'manage:users' },
-  { name: 'Link Platforms', href: '/link-platforms', icon: CubeIcon, permission: 'manage:platforms' },
 ];
 
 export default function Layout({ current, token, children }) {
@@ -83,8 +81,10 @@ export default function Layout({ current, token, children }) {
                 </Transition.Child>
                 <NavItem
                   classNames={classNames}
+                  current={current}
                   currentNavigation={currentNavigation}
                   logout={logout}
+                  token={token}
                   permittedNavigation={permittedNavigation}
                   user={user}
                   setSidebarOpen={setSidebarOpen}
@@ -97,8 +97,10 @@ export default function Layout({ current, token, children }) {
       <div className={styles.sideNav_tw}>
         <NavItem
           classNames={classNames}
+          current={current}
           currentNavigation={currentNavigation}
           logout={logout}
+          token={token}
           permittedNavigation={permittedNavigation}
           user={user}
           setSidebarOpen={setSidebarOpen}
@@ -157,12 +159,16 @@ export default function Layout({ current, token, children }) {
 
 const NavItem = ({
   classNames,
+  current,
   currentNavigation,
   permittedNavigation,
   logout,
+  token,
   user,
   setSidebarOpen,
 }) => {
+  const linkPlatformsPermission = token?.permissions?.includes('manage:platforms');
+
   return (
     <div className={styles.sidebarContainer_tw}>
       <Link href="/" onClick={() => setSidebarOpen(false)}>
@@ -191,9 +197,9 @@ const NavItem = ({
           ))}
             <li>
               <Link
-                href="/user-settings"
+                href={ linkPlatformsPermission ?  "/settings/link-platforms" : '/settings/user-settings' }
                 className={classNames(
-                  currentNavigation && currentNavigation.href === "/user-settings"
+                  current.includes('/settings')
                     ? "bg-gray-800 text-white"
                     : "text-gray-400 hover:text-white hover:bg-gray-800",
                   styles.navItem_tw

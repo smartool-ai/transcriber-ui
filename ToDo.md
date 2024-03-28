@@ -2,6 +2,8 @@ P1:
 * Add link platform to settings page
 * app initialization layer
   * use user info to determine apps that can be selected
+  * Update token and user permissions to state, and thus restrict layout settings for settings menu
+* Refactor layout code
 * Review upload transcript page
   * review text box PR
   * review loading state

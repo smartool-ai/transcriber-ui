@@ -1,4 +1,4 @@
-import { Link } from "wouter";
+import {Link, useLocation} from "wouter";
 import { classNames } from "../utils/tailwindUtils.js";
 import Logo from '../components/Logo';
 import * as styles from "./Layout.tailwind.js";
@@ -6,11 +6,11 @@ import {useUserContext} from "../context/UserContext.jsx";
 import routeConfigs from "../app/routeConfigs.js";
 
 const NavMenu = ({
-  currentNavigation,
   logout,
   user,
   setSidebarOpen,
 }) => {
+  const [location] = useLocation();
   const { permissions } = useUserContext();
 
   const navItems = routeConfigs.filter((config) => (
@@ -33,7 +33,7 @@ const NavMenu = ({
               <Link
                 href={item.path}
                 className={classNames(
-                  currentNavigation && currentNavigation.href == item.href
+                  location == item.path
                     ? 'bg-gray-800 text-white'
                     : 'text-gray-400 hover:text-white hover:bg-gray-800',
                   styles.navItem_tw
@@ -44,20 +44,6 @@ const NavMenu = ({
               </Link>
             </li>
           ))}
-          {/*<li>*/}
-          {/*  <Link*/}
-          {/*    href={ linkPlatformsPermission ?  "/settings/link-platforms" : '/settings/user-settings' }*/}
-          {/*    className={classNames(*/}
-          {/*      current.includes('/settings')*/}
-          {/*        ? "bg-gray-800 text-white"*/}
-          {/*        : "text-gray-400 hover:text-white hover:bg-gray-800",*/}
-          {/*      styles.navItem_tw*/}
-          {/*    )}*/}
-          {/*  >*/}
-          {/*    <CogIcon className="h-6 w-6 shrink-0" aria-hidden="true" />*/}
-          {/*    Settings*/}
-          {/*  </Link>*/}
-          {/*</li>*/}
         </ul>
       </nav>
       <div className={styles.profileAndSignOutContainer_tw}>

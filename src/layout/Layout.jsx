@@ -7,9 +7,7 @@ import {
   XMarkIcon,
   FolderIcon,
 } from '@heroicons/react/24/outline';
-import { Link } from "wouter";
 import { classNames } from "../utils/tailwindUtils.js";
-import Logo from '../components/Logo';
 import * as styles from "./Layout.tailwind.js";
 import {useUserContext} from "../context/UserContext.jsx";
 import routeConfigs from "../app/routeConfigs.js";
@@ -90,11 +88,8 @@ export default function Layout({ current, children }) {
                   </div>
                 </Transition.Child>
                 <NavMenu
-                  current={current}
                   currentNavigation={currentNavigation}
                   logout={logout}
-                  token={token}
-                  permittedNavigation={permittedNavigation}
                   user={user}
                   setSidebarOpen={setSidebarOpen}
                 />

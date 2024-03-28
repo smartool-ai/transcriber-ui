@@ -1,4 +1,4 @@
-import {CogIcon, FolderIcon, UserMinusIcon} from "@heroicons/react/24/outline/index.js";
+import {FolderIcon, UserMinusIcon} from "@heroicons/react/24/outline/index.js";
 
 const routeConfigs = [
   {
@@ -16,14 +16,6 @@ const routeConfigs = [
     sidePanel: true,
     path: '/delete-user',
     permission: 'manage:users',
-  },
-  {
-    name: 'Settings',
-    icon: CogIcon,
-    settingsNavigation: false,
-    sidePanel: true,
-    path: '/settings/link-platforms',
-    permission: true,
   },
   {
     name: 'User Settings',

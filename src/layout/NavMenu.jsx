@@ -1,3 +1,4 @@
+import {CogIcon} from "@heroicons/react/24/outline/index.js";
 import {Link, useLocation} from "wouter";
 import { classNames } from "../utils/tailwindUtils.js";
 import Logo from '../components/Logo';
@@ -16,6 +17,10 @@ const NavMenu = ({ setSidebarOpen }) => {
     && (config.permission === true || permissions.state.includes(config.permission))
   ));
 
+  const settingsPath = permissions.state.includes('manage:platforms')
+    ? '/settings/link-platforms'
+    : '/settings/user-settings';
+
   return (
     <div className={styles.sidebarContainer_tw}>
       <Link href="/" onClick={() => setSidebarOpen(false)}>
@@ -27,21 +32,35 @@ const NavMenu = ({ setSidebarOpen }) => {
       <nav className={styles.navContainer_tw}>
         <ul role="list">
           {navItems.map((item) => (
-            <li key={item.name} onClick={() => setSidebarOpen(false)} >
+            <li key={item.name} onClick={() => setSidebarOpen(false)}>
               <Link
                 href={item.path}
                 className={classNames(
-                  location == item.path
+                  location === item.path
                     ? 'bg-gray-800 text-white'
                     : 'text-gray-400 hover:text-white hover:bg-gray-800',
                   styles.navItem_tw
                 )}
               >
-                <item.icon className="h-6 w-6 shrink-0" aria-hidden="true" />
+                <item.icon className="h-6 w-6 shrink-0" aria-hidden="true"/>
                 {item.name}
               </Link>
             </li>
           ))}
+          <li onClick={() => setSidebarOpen(false)}>
+            <Link
+              href={settingsPath}
+              className={classNames(
+                location.includes('/settings')
+                  ? 'bg-gray-800 text-white'
+                  : 'text-gray-400 hover:text-white hover:bg-gray-800',
+                styles.navItem_tw
+              )}
+            >
+              <CogIcon className="h-6 w-6 shrink-0" aria-hidden="true"/>
+              Settings
+            </Link>
+          </li>
         </ul>
       </nav>
       <div className={styles.profileAndSignOutContainer_tw}>
@@ -54,7 +73,7 @@ const NavMenu = ({ setSidebarOpen }) => {
           <span className="sr-only">Your profile</span>
           <span aria-hidden="true">{user.state.name}</span>
           <button
-            onClick={() => logout({ returnTo: window.location.origin })}
+            onClick={() => logout({returnTo: window.location.origin})}
             className={styles.logoutButton_tw}
           >
             Sign out

@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client'
 import { Auth0Provider } from '@auth0/auth0-react';
 import { UploadTranscriptContextProvider } from './context/UploadTranscriptContext';
 import { UserContextProvider } from "./context/UserContext.jsx";
-import App from './App'
+import App from './app/App'
 import './index.css'
 
 const appRoot = (window.location.origin + window.location.pathname).replace(/\/$/, '');

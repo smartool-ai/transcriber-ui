@@ -14,7 +14,7 @@ export default function Layout({ current, children }) {
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
-  const currentNavigation = routeConfigs.find((config) => current.startsWith(config.href));
+  const currentNavigation = routeConfigs.find((config) => current.startsWith(config.path));
 
   return (
     <>

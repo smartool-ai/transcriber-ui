@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client'
 import { Auth0Provider } from '@auth0/auth0-react';
 import { UploadTranscriptContextProvider } from './context/UploadTranscriptContext';
 import { UserContextProvider } from "./context/UserContext.jsx";
-import App from './App'
+import InitApp from './app/InitApp.jsx';
 import './index.css'
 
 const appRoot = (window.location.origin + window.location.pathname).replace(/\/$/, '');
@@ -25,7 +25,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     >
         <UploadTranscriptContextProvider>
           <UserContextProvider>
-            <App />
+            <InitApp />
           </UserContextProvider>
         </UploadTranscriptContextProvider>
     </Auth0Provider>

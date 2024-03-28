@@ -28,7 +28,6 @@ export default function Layout({ current, children }) {
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
-  console.log('current:', current)
   const currentNavigation = navigation.find((item) => current.startsWith(item.href));
 
   const permittedNavigation = navigation.filter((item) => {

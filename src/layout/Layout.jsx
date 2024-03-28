@@ -1,49 +1,20 @@
 import { useAuth0 } from '@auth0/auth0-react';
 import { Fragment, useState } from 'react';
 import { Dialog, Menu, Transition } from '@headlessui/react';
-import {
-  Bars3Icon,
-  UserMinusIcon,
-  XMarkIcon,
-  FolderIcon,
-} from '@heroicons/react/24/outline';
+import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 import { classNames } from "../utils/tailwindUtils.js";
 import * as styles from "./Layout.tailwind.js";
 import {useUserContext} from "../context/UserContext.jsx";
 import routeConfigs from "../app/routeConfigs.js";
 import NavMenu from "./NavMenu.jsx";
 
-const navigation = [
-  { name: 'Upload Transcript', href: '/upload-transcript', icon: FolderIcon, permission: 'manage:upload_transcripts' },
-  { name: 'Delete User', href: '/delete-user', icon: UserMinusIcon, permission: 'manage:users' },
-];
-
 export default function Layout({ current, children }) {
-  const { permissions, token } = useUserContext();
-  const {
-    user,
-    logout,
-  } = useAuth0();
+  const { logout } = useAuth0();
+  const { user } = useUserContext();
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const currentNavigation = routeConfigs.find((config) => current.startsWith(config.href));
-
-  const navItems = routeConfigs.filter((config) => (
-    config.sidePanel
-    && (config.permission === true || permissions.state.includes(config.permission))
-  ));
-
-  const permittedNavigation = navigation.filter((item) => {
-    if (item.permission && token && token.permissions) {
-      return token.permissions.includes(item.permission);
-    } else {
-      return true;
-    };
-  });
-
-  console.log(navItems)
-  console.log(permittedNavigation)
 
   return (
     <>
@@ -109,7 +80,7 @@ export default function Layout({ current, children }) {
           <Menu.Button className="block">
             <img
               className={styles.avatar_tw}
-              src={user.picture}
+              src={user.state.picture}
               alt="User Avatar"
             />
           </Menu.Button>

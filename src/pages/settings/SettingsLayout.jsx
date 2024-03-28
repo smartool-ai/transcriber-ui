@@ -1,7 +1,5 @@
-import React, {useEffect, useState} from 'react';
-import {useUserContext} from "../../../context/UserContext.jsx";
-import {classNames} from "../../../utils/tailwindUtils.js";
-import SubMenu from "../../../components/SubMenu.jsx";
+import React from 'react';
+import SubMenu from "../../components/SubMenu.jsx";
 
 const SettingsLayout = ({ children }) => {
   const subMenuRoutes = [

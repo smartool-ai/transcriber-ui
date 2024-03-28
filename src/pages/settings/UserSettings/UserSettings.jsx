@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {useUserContext} from "../../../context/UserContext.jsx";
 import {classNames} from "../../../utils/tailwindUtils.js";
-import SubMenu from "../../../components/SubMenu.jsx";
+import SettingsLayout from "../SettingsLayout.jsx";
 // import Payment from "../components/Payment";
 // import { Elements } from '@stripe/react-stripe-js';
 // import {loadStripe} from '@stripe/stripe-js';
@@ -32,42 +32,38 @@ const UserSettings = () => {
         // Add your logic here to update user settings
     };
 
-    const subMenuRoutes = [
-        { path: '/settings/link-platforms', label: 'Link Platforms' },
-        { path: '/settings/user-settings', label: 'User Settings' },
-    ];
-
     return (
-        <div className="flex flex-col space-y-20">
-            <SubMenu routes={subMenuRoutes} />
-            <h1 className="h1">User Settings</h1>
-            <form className="flex flex-col space-y-10" onSubmit={handleSubmit}>
-                <div className="flex space-x-4 items-center">
-                    <label className="label">Name:</label>
-                    <input
-                      className="input"
-                      onChange={handleNameChange}
-                      type="text"
-                      value={name}
-                    />
-                </div>
-                <div>
-                    <button
-                      className={classNames(
-                        submitButtonDisabled ? 'btn-disabled' : '',
-                        "btn"
-                      )}
-                      disabled={submitButtonDisabled}
-                      type="submit"
-                    >
-                        Save
-                    </button>
-                </div>
-            </form>
-            <div className="flex flex-col space-y-4">
-                <a className="link">Reset Password</a>
-            </div>
-        </div>
+      <SettingsLayout>
+          <div>
+              <h1 className="h1">User Settings</h1>
+              <form className="flex flex-col space-y-10" onSubmit={handleSubmit}>
+                  <div className="flex space-x-4 items-center">
+                      <label className="label">Name:</label>
+                      <input
+                        className="input"
+                        onChange={handleNameChange}
+                        type="text"
+                        value={name}
+                      />
+                  </div>
+                  <div>
+                      <button
+                        className={classNames(
+                          submitButtonDisabled ? 'btn-disabled' : '',
+                          "btn"
+                        )}
+                        disabled={submitButtonDisabled}
+                        type="submit"
+                      >
+                          Save
+                      </button>
+                  </div>
+              </form>
+              <div className="flex flex-col space-y-4">
+                  <a className="link">Reset Password</a>
+              </div>
+          </div>
+      </SettingsLayout>
     );
 };
 

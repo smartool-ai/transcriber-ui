@@ -124,7 +124,7 @@ const LinkPlatforms = () => {
             className="input"
             placeholder="your-workspace-id"
           />
-          <label htmlFor="projectId" className="input">
+          <label htmlFor="projectId" className="label">
             Asana Project ID
           </label>
           <input
@@ -168,7 +168,7 @@ const LinkPlatforms = () => {
 
   const saveButton = (email, server, apiKey, personalAccessToken, projectId, workspaceId) => {
     return (
-      <div>
+      <div className="my-4">
         <button
           id="saveButton"
           type="button"
@@ -183,28 +183,23 @@ const LinkPlatforms = () => {
 
   return (
     <SettingsLayout>
-      <div>
-        <h1>
-          <label htmlFor="apiKey" className="block text-sm font-medium leading-6 text-white">
-            Add Platform Keys
-          </label>
-        </h1>
+      <div className="flex flex-col gap-y-3">
+          <label htmlFor="platform" className="label">Select
+            Platform:</label>
+          <select id="platform" name="platform" className="input" value={platform}
+                  onChange={handlePlatformChange}>
+            <option value="">Select</option>
+            <option value="Jira">Jira</option>
+            <option value="Asana">Asana</option>
+            <option value="Shortcut">Shortcut</option>
+          </select>
 
-        <label htmlFor="platform" className="block text-sm font-medium leading-6 text-white">Select
-          Platform:</label>
-        <select id="platform" name="platform" value={platform} onChange={handlePlatformChange}>
-          <option value="">Select</option>
-          <option value="Jira">Jira</option>
-          <option value="Asana">Asana</option>
-          <option value="Shortcut">Shortcut</option>
-        </select>
+          {renderFormFields(email, server, apiKey, personalAccessToken, projectId, workspaceId)}
 
-        {renderFormFields(email, server, apiKey, personalAccessToken, projectId, workspaceId)}
-
-        {saveButton(email, server, apiKey, personalAccessToken, projectId, workspaceId)}
-      </div>
+          {saveButton(email, server, apiKey, personalAccessToken, projectId, workspaceId)}
+        </div>
     </SettingsLayout>
-  );
+);
 };
 
 export default LinkPlatforms;

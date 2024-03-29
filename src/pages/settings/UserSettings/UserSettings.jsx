@@ -34,7 +34,7 @@ const UserSettings = () => {
 
     return (
       <SettingsLayout>
-          <form className="flex flex-col space-y-10" onSubmit={handleSubmit}>
+          <form className="flex flex-col" onSubmit={handleSubmit}>
               <div className="flex flex-col gap-y-3">
                   <label htmlFor="name" className="label">
                       Name

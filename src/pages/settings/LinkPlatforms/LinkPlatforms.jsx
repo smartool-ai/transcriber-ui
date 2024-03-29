@@ -69,94 +69,94 @@ const LinkPlatforms = () => {
     if (platform === 'Jira') {
       return (
         <div className="flex flex-col gap-y-3">
-          <label htmlFor="email" className="block text-sm font-medium leading-6 text-white">
+          <label htmlFor="email" className="label">
             Jira Email
           </label>
           <input
             id="email"
             type="email"
             value={email} onChange={e => handleEmailChange(e.target.value)}
-            className="block max-w-sm w-full rounded-md border-0 px-3 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"
+            className="input"
             placeholder="you@example.com"
           />
-          <label htmlFor="server" className="block text-sm font-medium leading-6 text-white">
+          <label htmlFor="server" className="label">
             Jira Server Adress
           </label>
           <input
             id="server"
             type="server"
             value={server} onChange={e => handleServerChange(e.target.value)}
-            className="block max-w-sm w-full rounded-md border-0 px-3 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"
+            className="input"
             placeholder="https://yourcompany.atlassian.net"
           />
-          <label htmlFor="apiKey" className="block text-sm font-medium leading-6 text-white">
+          <label htmlFor="apiKey" className="label">
             Jira API Key
           </label>
           <input
             id="apiKey"
             type="apiKey"
             value={apiKey} onChange={e => handleApiKeyChange(e.target.value)}
-            className="block max-w-sm w-full rounded-md border-0 px-3 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"
+            className="input"
             placeholder="your-api-key"
           />
         </div>
       );
     } else if (platform === 'Asana') {
       return (
-        <div>
-          <label htmlFor="personalAccessToken" className="block text-sm font-medium leading-6 text-white">
+        <div className="flex flex-col gap-y-3">
+          <label htmlFor="personalAccessToken" className="label">
             Asana Personal Access Token
           </label>
           <input
             id="personalAccessToken"
             type="personalAccessToken"
             value={personalAccessToken} onChange={e => handlePatChange(e.target.value)}
-            className="block max-w-sm w-full rounded-md border-0 px-3 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"
+            className="input"
             placeholder="your-personal-access-token"
           />
-          <label htmlFor="workspaceId" className="block text-sm font-medium leading-6 text-white">
+          <label htmlFor="workspaceId" className="label">
             Asana Workspace Id
           </label>
           <input
             id="workspaceId"
             type="workspaceId"
             value={workspaceId} onChange={e => handleWorkspaceIdChange(e.target.value)}
-            className="block max-w-sm w-full rounded-md border-0 px-3 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"
+            className="input"
             placeholder="your-workspace-id"
           />
-          <label htmlFor="projectId" className="block text-sm font-medium leading-6 text-white">
+          <label htmlFor="projectId" className="label">
             Asana Project ID
           </label>
           <input
             id="projectId"
             type="projectId"
             value={projectId} onChange={e => handleProjectIdChange(e.target.value)}
-            className="block max-w-sm w-full rounded-md border-0 px-3 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"
+            className="input"
             placeholder="your-project-id"
           />
         </div>
       );
     } else if (platform === 'Shortcut') {
       return (
-        <div>
-          <label htmlFor="apiKey" className="block text-sm font-medium leading-6 text-white">
+        <div className="flex flex-col gap-y-3">
+          <label htmlFor="apiKey" className="label">
             Shortcut API Key
           </label>
           <input
             id="apiKey"
             type="apiKey"
             value={apiKey} onChange={e => handleApiKeyChange(e.target.value)}
-            className="block max-w-sm w-full rounded-md border-0 px-3 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"
+            className="input"
             placeholder="your-api-key"
           />
-          <label htmlFor="projectId" className="block text-sm font-medium leading-6 text-white">
+          <label htmlFor="projectId" className="label">
             Shortcut Project ID
           </label>
           <input
             id="projectId"
             type="projectId"
             value={projectId} onChange={e => handleProjectIdChange(e.target.value)}
-            className="block max-w-sm w-full rounded-md border-0 px-3 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"
+            className="input"
             placeholder="your-project-id"
           />
         </div>
@@ -168,12 +168,12 @@ const LinkPlatforms = () => {
 
   const saveButton = (email, server, apiKey, personalAccessToken, projectId, workspaceId) => {
     return (
-      <div>
+      <div className="my-4">
         <button
           id="saveButton"
           type="button"
           onClick={() => save(email, server, apiKey, personalAccessToken, projectId, workspaceId)}
-          className="rounded-md bg-blue-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-[#4654A3] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+          className="btn"
         >
           Save
         </button>
@@ -183,28 +183,23 @@ const LinkPlatforms = () => {
 
   return (
     <SettingsLayout>
-      <div>
-        <h1>
-          <label htmlFor="apiKey" className="block text-sm font-medium leading-6 text-white">
-            Add Platform Keys
-          </label>
-        </h1>
+      <div className="flex flex-col gap-y-3">
+          <label htmlFor="platform" className="label">Select
+            Platform:</label>
+          <select id="platform" name="platform" className="input" value={platform}
+                  onChange={handlePlatformChange}>
+            <option value="">Select</option>
+            <option value="Jira">Jira</option>
+            <option value="Asana">Asana</option>
+            <option value="Shortcut">Shortcut</option>
+          </select>
 
-        <label htmlFor="platform" className="block text-sm font-medium leading-6 text-white">Select
-          Platform:</label>
-        <select id="platform" name="platform" value={platform} onChange={handlePlatformChange}>
-          <option value="">Select</option>
-          <option value="Jira">Jira</option>
-          <option value="Asana">Asana</option>
-          <option value="Shortcut">Shortcut</option>
-        </select>
+          {renderFormFields(email, server, apiKey, personalAccessToken, projectId, workspaceId)}
 
-        {renderFormFields(email, server, apiKey, personalAccessToken, projectId, workspaceId)}
-
-        {saveButton(email, server, apiKey, personalAccessToken, projectId, workspaceId)}
-      </div>
+          {saveButton(email, server, apiKey, personalAccessToken, projectId, workspaceId)}
+        </div>
     </SettingsLayout>
-  );
+);
 };
 
 export default LinkPlatforms;

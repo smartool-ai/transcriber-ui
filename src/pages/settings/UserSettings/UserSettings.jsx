@@ -34,34 +34,33 @@ const UserSettings = () => {
 
     return (
       <SettingsLayout>
-          <div className="flex flex-col space-y-8">
-              <form className="flex flex-col space-y-10" onSubmit={handleSubmit}>
-                  <div className="flex space-x-4 items-center">
-                      <label className="label">Name:</label>
-                      <input
-                        className="input"
-                        onChange={handleNameChange}
-                        type="text"
-                        value={name}
-                      />
-                  </div>
-                  <div>
-                      <button
-                        className={classNames(
-                          submitButtonDisabled ? 'btn-disabled' : '',
-                          "btn"
-                        )}
-                        disabled={submitButtonDisabled}
-                        type="submit"
-                      >
-                          Save
-                      </button>
-                  </div>
-              </form>
-              <div className="flex flex-col space-y-4">
-                  <a className="link">Reset Password</a>
+          <form className="flex flex-col" onSubmit={handleSubmit}>
+              <div className="flex flex-col gap-y-3">
+                  <label htmlFor="name" className="label">
+                      Name
+                  </label>
+                  <input
+                    className="input"
+                    onChange={handleNameChange}
+                    type="text"
+                    value={name}
+                    id="name"
+                  />
+                  <a className="my-4 link">Reset Password</a>
               </div>
-          </div>
+              <div>
+                  <button
+                    className={classNames(
+                      submitButtonDisabled ? 'btn-disabled' : '',
+                      "btn"
+                    )}
+                    disabled={submitButtonDisabled}
+                    type="submit"
+                  >
+                      Save
+                  </button>
+              </div>
+          </form>
       </SettingsLayout>
     );
 };

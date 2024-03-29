@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import useRequest from '../../../hooks/useRequest';
 import SettingsLayout from "../SettingsLayout.jsx";
+import {classNames} from "../../../utils/tailwindUtils.js";
 
 const LinkPlatforms = () => {
-  const [platform, setPlatform] = useState('');
+  const [platform, setPlatform] = useState(null);
   const [email, setEmail] = useState(null);
   const [server, setServer] = useState(null);
   const [apiKey, setApiKey] = useState(null);
@@ -39,6 +40,14 @@ const LinkPlatforms = () => {
   const handleWorkspaceIdChange = (value) => {
     setWorkspaceId(value);
   };
+
+  const requiredFields = {
+    'Jira': email && server && apiKey,
+    'Asana': personalAccessToken && projectId && workspaceId,
+    'Shortcut': apiKey && projectId,
+  };
+
+  const saveButtonEnabled = platform && requiredFields[platform];
 
   const save = async (email, server, apiKey, personalAccessToken, projectId, workspaceId) => {
     const reqBody = {
@@ -170,10 +179,14 @@ const LinkPlatforms = () => {
     return (
       <div className="my-4">
         <button
+          disabled={!saveButtonEnabled}
           id="saveButton"
           type="button"
           onClick={() => save(email, server, apiKey, personalAccessToken, projectId, workspaceId)}
-          className="btn"
+          className={classNames(
+            saveButtonEnabled ? '' : 'btn-disabled',
+            "btn"
+          )}
         >
           Save
         </button>

@@ -6,6 +6,7 @@ import { classNames } from "../utils/tailwindUtils.js";
 import * as styles from "./Layout.tailwind.js";
 import {useUserContext} from "../context/UserContext.jsx";
 import routeConfigs from "../app/routeConfigs.js";
+import Logo from "../components/Logo.jsx";
 import NavMenu from "./NavMenu.jsx";
 
 export default function Layout({ current, children }) {
@@ -73,7 +74,11 @@ export default function Layout({ current, children }) {
           <Bars3Icon className="h-6 w-6" aria-hidden="true" />
         </button>
         <div className={styles.topNavCurrentItem_tw}>
-          {currentNavigation?.icon && <currentNavigation.icon className="h-6 w-6 shrink-0" aria-hidden="true" />}
+          {currentNavigation?.icon && (
+            currentNavigation?.path.includes("/upload-transcript")
+              ? <Logo type="transcriber" size="xs" />
+              : <currentNavigation.icon className="h-6 w-6 shrink-0" aria-hidden="true" />
+          )}
           {currentNavigation && currentNavigation.name}
         </div>
         <Menu as="div">

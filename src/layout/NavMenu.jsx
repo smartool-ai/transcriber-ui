@@ -25,7 +25,7 @@ const NavMenu = ({ setSidebarOpen }) => {
     <div className={styles.sidebarContainer_tw}>
       <Link href="/" onClick={() => setSidebarOpen(false)}>
         <div className={styles.logo_tw}>
-          <Logo inverted={true} size="sm" />
+          <Logo size="sm" />
           <h1 className={styles.logoName_tw}>Transcriber</h1>
         </div>
       </Link>
@@ -42,7 +42,7 @@ const NavMenu = ({ setSidebarOpen }) => {
                   styles.navItem_tw
                 )}
               >
-                <item.icon className="h-6 w-6 shrink-0" aria-hidden="true"/>
+                {item.path === "/upload-transcript" ? <Logo type="transcriber" size="xs" /> : <item.icon className="h-6 w-6 shrink-0" aria-hidden="true"/>}
                 {item.name}
               </Link>
             </li>

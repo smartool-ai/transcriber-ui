@@ -34,6 +34,38 @@ const UserSettings = () => {
 
     return (
       <SettingsLayout>
+          <div className="flex flex-col gap-y-3">
+              <label htmlFor="email" className="label">
+                  Jira Email
+              </label>
+              <input
+                id="email"
+                type="email"
+                // value={email} onChange={e => handleEmailChange(e.target.value)}
+                className="input"
+                placeholder="you@example.com"
+              />
+              <label htmlFor="server" className="label">
+                  Jira Server Adress
+              </label>
+              <input
+                id="server"
+                type="server"
+                // value={server} onChange={e => handleServerChange(e.target.value)}
+                className="input"
+                placeholder="https://yourcompany.atlassian.net"
+              />
+              <label htmlFor="apiKey" className="label">
+                  Jira API Key
+              </label>
+              <input
+                id="apiKey"
+                type="apiKey"
+                // value={apiKey} onChange={e => handleApiKeyChange(e.target.value)}
+                className="input"
+                placeholder="your-api-key"
+              />
+          </div>
           <div className="flex flex-col space-y-8">
               <form className="flex flex-col space-y-10" onSubmit={handleSubmit}>
                   <div className="flex space-x-4 items-center">

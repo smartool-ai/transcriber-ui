@@ -2,7 +2,7 @@ import {UserMinusIcon} from "@heroicons/react/24/outline/index.js";
 
 const routeConfigs = [
   {
-    name: 'Upload Transcript',
+    name: 'Transcriber',
     icon: true, // <Logo /> is rendered instead
     settingsNavigation: false,
     sidePanel: true,

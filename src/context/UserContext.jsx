@@ -1,30 +1,44 @@
 import { createContext, useContext, useState } from 'react'
 
 export const UserContext = createContext({
-  firstName: {
+  permissions: {
     setState: () => {},
     state: null,
   },
-  fullName: {
+  token: {
+    setState: () => {},
+    state: null,
+  },
+  user: {
     setState: () => {},
     state: null,
   },
 });
 
 export const UserContextProvider = ({ children }) => {
-  const [firstName, setFirstName] = useState(null);
-  const [fullName, setFullName] = useState(null);
+  const [permissions, setPermissions] = useState(null);
+  const [token, setToken] = useState(null);
+  const [user, setUser] = useState(null);
+
+  const handleToken = (token) => {
+    setPermissions(token.permissions);
+    setToken(token);
+  };
 
   return (
     <UserContext.Provider value={{
-      firstName: {
-        setState: setFirstName,
-        state: firstName,
+      permissions: {
+        setState: setPermissions,
+        state: permissions,
       },
-      fullName: {
-        setState: setFullName,
-        state: fullName,
-      }
+      token: {
+        setState: handleToken,
+        state: token,
+      },
+      user: {
+        setState: setUser,
+        state: user,
+      },
     }}>
       {children}
     </UserContext.Provider>

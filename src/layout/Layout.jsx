@@ -1,42 +1,21 @@
 import { useAuth0 } from '@auth0/auth0-react';
 import { Fragment, useState } from 'react';
 import { Dialog, Menu, Transition } from '@headlessui/react';
-import {
-  Bars3Icon,
-  CubeIcon,
-  UserMinusIcon,
-  XMarkIcon,
-  FolderIcon,
-  CogIcon
-} from '@heroicons/react/24/outline';
-import { Link } from "wouter";
-import { classNames } from "../../utils/tailwindUtils.js";
-import Logo from '../Logo';
+import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
+import { classNames } from "../utils/tailwindUtils.js";
 import * as styles from "./Layout.tailwind.js";
+import {useUserContext} from "../context/UserContext.jsx";
+import routeConfigs from "../app/routeConfigs.js";
+import Logo from "../components/Logo.jsx";
+import NavMenu from "./NavMenu.jsx";
 
-const navigation = [
-  { name: 'Transcriber', href: '/upload-transcript', icon: FolderIcon, permission: 'manage:upload_transcripts' },
-  { name: 'Delete User', href: '/delete-user', icon: UserMinusIcon, permission: 'manage:users' },
-  { name: 'Link Platforms', href: '/link-platforms', icon: CubeIcon, permission: 'manage:platforms' },
-];
-
-export default function Layout({ current, token, children }) {
-  const {
-    user,
-    logout,
-  } = useAuth0();
+export default function Layout({ current, children }) {
+  const { logout } = useAuth0();
+  const { user } = useUserContext();
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
-  const currentNavigation = navigation.find((item) => current.startsWith(item.href));
-
-  const permittedNavigation = navigation.filter((item) => {
-    if (item.permission && token && token.permissions) {
-      return token.permissions.includes(item.permission);
-    } else {
-      return true;
-    };
-  });
+  const currentNavigation = routeConfigs.find((config) => current.startsWith(config.path));
 
   return (
     <>
@@ -53,7 +32,6 @@ export default function Layout({ current, token, children }) {
           >
             <div className="fixed inset-0 bg-gray-900/80" />
           </Transition.Child>
-
           <div className="fixed inset-0 flex">
             <Transition.Child
               as={Fragment}
@@ -81,28 +59,14 @@ export default function Layout({ current, token, children }) {
                     </button>
                   </div>
                 </Transition.Child>
-                <NavItem
-                  classNames={classNames}
-                  currentNavigation={currentNavigation}
-                  logout={logout}
-                  permittedNavigation={permittedNavigation}
-                  user={user}
-                  setSidebarOpen={setSidebarOpen}
-                />
+                <NavMenu setSidebarOpen={setSidebarOpen} />
               </Dialog.Panel>
             </Transition.Child>
           </div>
         </Dialog>
       </Transition.Root>
       <div className={styles.sideNav_tw}>
-        <NavItem
-          classNames={classNames}
-          currentNavigation={currentNavigation}
-          logout={logout}
-          permittedNavigation={permittedNavigation}
-          user={user}
-          setSidebarOpen={setSidebarOpen}
-        />
+        <NavMenu setSidebarOpen={setSidebarOpen} />
       </div>
       <div className={styles.topNav_tw}>
         <button type="button" className={styles.hamburgerIcon_tw} onClick={() => setSidebarOpen(true)}>
@@ -110,14 +74,18 @@ export default function Layout({ current, token, children }) {
           <Bars3Icon className="h-6 w-6" aria-hidden="true" />
         </button>
         <div className={styles.topNavCurrentItem_tw}>
-          {currentNavigation?.icon && <currentNavigation.icon className="h-6 w-6 shrink-0" aria-hidden="true" />}
+          {currentNavigation?.icon && (
+            currentNavigation?.path.includes("/upload-transcript")
+              ? <Logo type="transcriber" size="xs" />
+              : <currentNavigation.icon className="h-6 w-6 shrink-0" aria-hidden="true" />
+          )}
           {currentNavigation && currentNavigation.name}
         </div>
         <Menu as="div">
           <Menu.Button className="block">
             <img
               className={styles.avatar_tw}
-              src={user.picture}
+              src={user.state.picture}
               alt="User Avatar"
             />
           </Menu.Button>
@@ -154,6 +122,7 @@ export default function Layout({ current, token, children }) {
     </>
   );
 };
+<<<<<<< HEAD:src/components/layout/Layout.jsx
 
 const NavItem = ({
   classNames,
@@ -225,3 +194,5 @@ const NavItem = ({
     </div>
   );
 };
+=======
+>>>>>>> 06120130678d2fef9dad5ef461bb069fb4cec7ae:src/layout/Layout.jsx

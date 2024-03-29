@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import useRequest from '../hooks/useRequest';
+import useRequest from '../../../hooks/useRequest';
+import SettingsLayout from "../SettingsLayout.jsx";
 
-const AddPlatformKeys = () => {
+const LinkPlatforms = () => {
   const [platform, setPlatform] = useState('');
   const [email, setEmail] = useState(null);
   const [server, setServer] = useState(null);
@@ -181,26 +182,29 @@ const AddPlatformKeys = () => {
   };
 
   return (
-    <div>
-      <h1>
-        <label htmlFor="apiKey" className="block text-sm font-medium leading-6 text-white">
-          Add Platform Keys
-        </label>
-      </h1>
+    <SettingsLayout>
+      <div>
+        <h1>
+          <label htmlFor="apiKey" className="block text-sm font-medium leading-6 text-white">
+            Add Platform Keys
+          </label>
+        </h1>
 
-      <label htmlFor="platform" className="block text-sm font-medium leading-6 text-white">Select Platform:</label>
-      <select id="platform" name="platform" value={platform} onChange={handlePlatformChange}>
-        <option value="">Select</option>
-        <option value="Jira">Jira</option>
-        <option value="Asana">Asana</option>
-        <option value="Shortcut">Shortcut</option>
-      </select>
+        <label htmlFor="platform" className="block text-sm font-medium leading-6 text-white">Select
+          Platform:</label>
+        <select id="platform" name="platform" value={platform} onChange={handlePlatformChange}>
+          <option value="">Select</option>
+          <option value="Jira">Jira</option>
+          <option value="Asana">Asana</option>
+          <option value="Shortcut">Shortcut</option>
+        </select>
 
-      {renderFormFields(email, server, apiKey, personalAccessToken, projectId, workspaceId)}
+        {renderFormFields(email, server, apiKey, personalAccessToken, projectId, workspaceId)}
 
-      {saveButton(email, server, apiKey, personalAccessToken, projectId, workspaceId)}
-    </div>
+        {saveButton(email, server, apiKey, personalAccessToken, projectId, workspaceId)}
+      </div>
+    </SettingsLayout>
   );
 };
 
-export default AddPlatformKeys;
+export default LinkPlatforms;

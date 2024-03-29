@@ -2,7 +2,7 @@ import { useCallback } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
 
 const appRoot = (window.location.origin + window.location.pathname).replace(/\/$/, '');
-const apiRoot = `${appRoot}/api`;
+const apiRoot = __API_URL__ || `${appRoot}/api`;
 
 export default function useRequest() {
   const { getAccessTokenSilently } = useAuth0();

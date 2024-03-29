@@ -1,9 +1,9 @@
-import {FolderIcon, UserMinusIcon} from "@heroicons/react/24/outline/index.js";
+import {UserMinusIcon} from "@heroicons/react/24/outline/index.js";
 
 const routeConfigs = [
   {
     name: 'Upload Transcript',
-    icon: FolderIcon,
+    icon: true, // <Logo /> is rendered instead
     settingsNavigation: false,
     sidePanel: true,
     path: '/upload-transcript',

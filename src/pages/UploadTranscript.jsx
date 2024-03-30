@@ -52,9 +52,7 @@ export default function UploadTranscript() {
 		}
 	};
 
-	const uploadTranscriptFile = async () => {
-		const fileName = fileInput.current.files[0].name;
-
+	const uploadTranscriptFile = async (fileName) => {
 		const formData = new FormData();
 		formData.append("file", fileInput.current.files[0]);
 

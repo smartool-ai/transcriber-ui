@@ -4,8 +4,9 @@ import Spinner from '../components/Spinner';
 import Toast from '../components/Toast';
 import TicketTable from '../components/tables/TicketsTable';
 import UploadedFilesTable from '../components/tables/UploadedFilesTable';
-import * as styles from "./UploadTranscript.tailwind";
 import { UploadTranscriptContext } from '../context/UploadTranscriptContext';
+import FileUpload from '../components/FileUpload';
+
 
 export default function UploadTranscript() {
 	const fileInput = useRef(null);
@@ -14,7 +15,7 @@ export default function UploadTranscript() {
 	const [isPolling, setIsPolling] = useState(false);
 	const [toast, setToast] = useState({
 		showToast: true,
-		label: "Please note that currently only .txt files are supported.",
+		label: "Please note that currently only .txt files are supported.", // Ren TODO: Update this '.txt' with files we accept on upload
 		type: "info"
 	});
 	const {
@@ -31,9 +32,7 @@ export default function UploadTranscript() {
 		return <Spinner />;
 	}
 
-	const uploadTranscriptFile = async () => {
-		const fileName = fileInput.current.files[0].name;
-
+	const uploadTranscriptFile = async (fileName) => {
 		const formData = new FormData();
 		formData.append("file", fileInput.current.files[0]);
 
@@ -124,7 +123,7 @@ export default function UploadTranscript() {
 						if (resJson.tickets && resJson.tickets.length > 0) {
 							setIsPolling(false);
 							setTicketsResponse(resJson);
-							setGenerationResponse(prev => ({...prev, ...submitedResponseJson}))
+							setGenerationResponse(prev => ({ ...prev, ...submitedResponseJson }))
 							response = true;
 						} else {
 							await new Promise(resolve => setTimeout(resolve, 5000)); // Wait for 5 seconds before making the next request
@@ -158,7 +157,7 @@ export default function UploadTranscript() {
 	};
 
 	const expandTickets = async (id, subject, body, estimationPoints) => {
-		try{
+		try {
 			setIsExpanding(true);
 
 			const expandBody = { "name": subject, "description": body, "estimate": estimationPoints };
@@ -187,9 +186,9 @@ export default function UploadTranscript() {
 						const subTicketResponseJson = await getSubTicketResponse.json();
 
 						if (subTicketResponseJson?.tickets && subTicketResponseJson?.tickets.length > 0) {
-							const subTickets = await subTicketResponseJson.tickets.map((ticket) => ({...ticket, subTicketOf: id}))
+							const subTickets = await subTicketResponseJson.tickets.map((ticket) => ({ ...ticket, subTicketOf: id }))
 							const consolidatedTickets = consolidateAllTickets(id, subTickets);
-							setTicketsResponse({tickets: consolidatedTickets});
+							setTicketsResponse({ tickets: consolidatedTickets });
 							setToast({
 								type: "success",
 								label: `Ticket: ${subject} has been expanded`,
@@ -202,7 +201,7 @@ export default function UploadTranscript() {
 							await new Promise(resolve => setTimeout(resolve, 5000)); // Wait for 5 seconds before making the next request
 							count++;
 						}
-						
+
 					} else {
 						await new Promise(resolve => setTimeout(resolve, 5000)); // Wait for 5 seconds before making the next request
 						count++;
@@ -229,18 +228,18 @@ export default function UploadTranscript() {
 			});
 		}
 	};
-	
+
 	const consolidateAllTickets = (id, subTickets) => {
 		const mainTicketIndex = ticketsResponse.tickets.findIndex(ticket => ticket.id === id);
 		const sliceFirstHalf = ticketsResponse.tickets.slice(0, mainTicketIndex);
-		
+
 		// Add 'expanded' field to limit ticket expansion once
-		const expandedTicket = {...ticketsResponse.tickets[mainTicketIndex], expanded: true};
+		const expandedTicket = { ...ticketsResponse.tickets[mainTicketIndex], expanded: true };
 
 		const sliceSecondHalf = ticketsResponse.tickets.slice(mainTicketIndex + 1);
 		return [...sliceFirstHalf, expandedTicket, ...subTickets, ...sliceSecondHalf];
 	};
-	
+
 	const saveTickets = async (id, subject, body, estimationPoints) => {
 		const ticketParams = { "name": subject, "description": body, "estimate": estimationPoints };
 		const submitResponse = await apiRequest(`/ticket?platform=${document.getElementById(id).value}`, {
@@ -264,30 +263,13 @@ export default function UploadTranscript() {
 		}
 	};
 
-	const uploadButton = (
-		<label
-			htmlFor="upload"
-			className={styles.uploadButton_tw}
-		>
-			<span>{uploadResponse ? "Upload Another Transcript" : "Upload Transcript"}</span>
-			<input
-				type="file"
-				id="upload"
-				name="upload"
-				ref={fileInput}
-				onChange={uploadTranscriptFile}
-				className="sr-only"
-			/>
-		</label>
-	);
-
 	const handleClearAll = () => {
 		setTicketsResponse(null);
 		setUploadResponse(null);
 	};
 
 	const clearButton = (handleOnClick, buttonLabel) => (
-		<button className={styles.uploadButton_tw} onClick={handleOnClick}>
+		<button className="w-full mt-3 cursor-pointer btn text-sm" onClick={handleOnClick}>
 			{buttonLabel}
 		</button>
 	);
@@ -296,7 +278,8 @@ export default function UploadTranscript() {
 		<>
 			{toast.showToast && <Toast type={toast.type} label={toast.label} onClose={() => setToast(previous => ({ ...previous, showToast: false }))} />}
 			{uploadResponse ? (
-				<div className={styles.transcriptContainer_tw}>
+				<div>
+					<FileUpload uploadTranscriptFile={uploadTranscriptFile} fileInput={fileInput} />
 					<UploadedFilesTable
 						generateTickets={generateTickets}
 						response={uploadResponse}
@@ -304,7 +287,6 @@ export default function UploadTranscript() {
 						isPolling={isPolling}
 					/>
 					<div className="flex gap-3">
-						{uploadButton}
 						{!ticketsResponse && uploadResponse && clearButton(() => setUploadResponse(null), "Clear Uploaded Files")}
 						{ticketsResponse && clearButton(() => setTicketsResponse(null), "Clear Generated Tickets")}
 						{ticketsResponse && clearButton(handleClearAll, "Clear All")}
@@ -319,14 +301,8 @@ export default function UploadTranscript() {
 						/>
 					)}
 				</div>
-			) : (
-				<div className={styles.transcriptContainer_tw}>
-					<div className="text-gray-400 border-gray-900 border-4 rounded-md p-4">
-						Placeholder: Drag and Drop
-					</div>
-					{uploadButton}
-				</div>
-			)}
+			) : <FileUpload uploadTranscriptFile={uploadTranscriptFile} fileInput={fileInput} />
+			}
 		</>
 	);
 }

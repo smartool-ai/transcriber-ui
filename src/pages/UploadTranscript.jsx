@@ -25,6 +25,8 @@ export default function UploadTranscript() {
 		setTicketsResponse,
 		uploadResponse,
 		setUploadResponse,
+		fileContent,
+		setFileContent,
 	} = useContext(UploadTranscriptContext);
 	const apiRequest = useRequest();
 
@@ -32,7 +34,27 @@ export default function UploadTranscript() {
 		return <Spinner />;
 	}
 
-	const uploadTranscriptFile = async (fileName) => {
+	const getFileContent = async (fileName) => {
+		const res = await apiRequest(`/file/${fileName}/content`, {
+			method: "get",
+		}
+		);
+
+		if (res.status === 200) {
+			const fileContent = await res.json();
+			setFileContent(fileContent.content);
+		} else {
+			setToast({
+				type: "error",
+				label: "An error occurred while fetching the file content.",
+				showToast: true,
+			});
+		}
+	};
+
+	const uploadTranscriptFile = async () => {
+		const fileName = fileInput.current.files[0].name;
+
 		const formData = new FormData();
 		formData.append("file", fileInput.current.files[0]);
 
@@ -48,12 +70,14 @@ export default function UploadTranscript() {
 				}
 
 				setIsUploading(false);
-				setUploadResponse(await apiUploadResponse.json());
+				const uploadResponseLocal = await apiUploadResponse.json();
+				setUploadResponse(uploadResponseLocal);
 				setToast({
 					type: "success",
 					label: "Your transcript has been uploaded!",
 					showToast: true,
 				});
+				getFileContent(uploadResponseLocal.files[0].name);
 			} catch (error) {
 				setIsUploading(false);
 				setToast({
@@ -291,6 +315,13 @@ export default function UploadTranscript() {
 						{ticketsResponse && clearButton(() => setTicketsResponse(null), "Clear Generated Tickets")}
 						{ticketsResponse && clearButton(handleClearAll, "Clear All")}
 					</div>
+					
+					{fileContent && (
+						<div>
+							<h3 style={{ color: 'white' }}>File Content:</h3>
+							<pre style={{ overflow: 'auto', background: 'white', height: '200px' }}>{fileContent}</pre>
+						</div>
+					)}
 					{ticketsResponse && (
 						<TicketTable
 							expandTickets={expandTickets}

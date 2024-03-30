@@ -4,6 +4,7 @@ import Spinner from '../components/Spinner';
 import WelcomePage from '../pages/WelcomePage';
 import {useUserContext} from "../context/UserContext.jsx";
 import App from "./App.jsx";
+import useRequest from "../hooks/useRequest.js";
 
 const InitApp = () => {
   const {
@@ -12,6 +13,7 @@ const InitApp = () => {
     user: auth0User,
     getAccessTokenSilently
   } = useAuth0();
+  const apiRequest = useRequest();
 
   const {
     permissions,
@@ -32,9 +34,17 @@ const InitApp = () => {
     return <WelcomePage />
   }
 
+  const getUserData = async () => {
+    const userData = await apiRequest('/user-metadata');
+    console.log('------------');
+    console.log(userData);
+    console.log('------------');
+  }
+
   if (auth0User && !isInitialized) {
     getAccessTokenSilently().then((userToken) => token.setState(jwtDecode(userToken)));
     user.setState(auth0User);
+    getUserData();
   }
 
   if (isInitialized) {

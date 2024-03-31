@@ -10,7 +10,7 @@ export default function WelcomePage() {
 				onClick={() => loginWithRedirect()}
 				className="btn"
 			>
-				Sign in
+				Sign in / Sign Up
 			</button>
 		</div>
 	);

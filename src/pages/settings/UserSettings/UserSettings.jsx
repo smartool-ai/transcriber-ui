@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {useUserContext} from "../../../context/UserContext.jsx";
 import {classNames} from "../../../utils/tailwindUtils.js";
 import SettingsLayout from "../SettingsLayout.jsx";
+import useRequest from "../../../hooks/useRequest.js";
 // import Payment from "../components/Payment";
 // import { Elements } from '@stripe/react-stripe-js';
 // import {loadStripe} from '@stripe/stripe-js';
@@ -14,6 +15,7 @@ import SettingsLayout from "../SettingsLayout.jsx";
 const UserSettings = () => {
     const { user } = useUserContext();
     const [name, setName] = useState('');
+    const apiRequest = useRequest();
 
     useEffect(() => {
         if (name !== user.state.name) {
@@ -22,6 +24,15 @@ const UserSettings = () => {
     }, [user.state]);
 
     const submitButtonDisabled = name === user.state.name;
+
+    const getUserData = async () => {
+        const userData = await apiRequest('/user-metadata');
+        console.log('------------');
+        console.log(userData);
+        console.log('------------');
+    }
+
+    getUserData();
 
     const handleNameChange = (e) => {
         setName(e.target.value);

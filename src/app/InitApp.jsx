@@ -13,7 +13,7 @@ const InitApp = () => {
     user: auth0User,
     getAccessTokenSilently
   } = useAuth0();
-  const apiRequest = useRequest();
+  // const apiRequest = useRequest();
 
   const {
     permissions,
@@ -34,17 +34,17 @@ const InitApp = () => {
     return <WelcomePage />
   }
 
-  const getUserData = async () => {
-    const userData = await apiRequest('/user-metadata');
-    console.log('------------');
-    console.log(userData);
-    console.log('------------');
-  }
+  // const getUserData = async () => {
+  //   const userData = await apiRequest('/user-metadata');
+  //   console.log('------------');
+  //   console.log(userData);
+  //   console.log('------------');
+  // }
 
   if (auth0User && !isInitialized) {
     getAccessTokenSilently().then((userToken) => token.setState(jwtDecode(userToken)));
     user.setState(auth0User);
-    getUserData();
+    // getUserData();
   }
 
   if (isInitialized) {

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import useRequest from '../../../hooks/useRequest';
 import SettingsLayout from "../SettingsLayout.jsx";
 import {classNames} from "../../../utils/tailwindUtils.js";
+import LinkPlatformsFields from "./LinkPlatformsFields.jsx";
 
 const LinkPlatforms = () => {
   const [platform, setPlatform] = useState(null);
@@ -13,34 +14,6 @@ const LinkPlatforms = () => {
   const [workspaceId, setWorkspaceId] = useState(null);
   const apiRequest = useRequest();
 
-  const handlePlatformChange = (event) => {
-    setPlatform(event.target.value);
-  };
-
-  const handleEmailChange = (value) => {
-    setEmail(value);
-  };
-
-  const handleServerChange = (value) => {
-    setServer(value);
-  };
-
-  const handleApiKeyChange = (value) => {
-    setApiKey(value);
-  };
-
-  const handleProjectIdChange = (value) => {
-    setProjectId(value);
-  };
-
-  const handlePatChange = (value) => {
-    setPat(value);
-  };
-
-  const handleWorkspaceIdChange = (value) => {
-    setWorkspaceId(value);
-  };
-
   const requiredFields = {
     'Jira': email && server && apiKey,
     'Asana': personalAccessToken && projectId && workspaceId,
@@ -49,7 +22,7 @@ const LinkPlatforms = () => {
 
   const saveButtonEnabled = platform && requiredFields[platform];
 
-  const save = async (email, server, apiKey, personalAccessToken, projectId, workspaceId) => {
+  const save = async () => {
     const reqBody = {
       "email": email,
       "server": server,
@@ -74,145 +47,50 @@ const LinkPlatforms = () => {
     }
   };
 
-  const renderFormFields = (email, server, apiKey, personalAccessToken, projectId, workspaceId) => {
-    if (platform === 'Jira') {
-      return (
-        <div className="flex flex-col gap-y-3">
-          <label htmlFor="email" className="label">
-            Jira Email
-          </label>
-          <input
-            id="email"
-            type="email"
-            value={email} onChange={e => handleEmailChange(e.target.value)}
-            className="input"
-            placeholder="you@example.com"
-          />
-          <label htmlFor="server" className="label">
-            Jira Server Adress
-          </label>
-          <input
-            id="server"
-            type="server"
-            value={server} onChange={e => handleServerChange(e.target.value)}
-            className="input"
-            placeholder="https://yourcompany.atlassian.net"
-          />
-          <label htmlFor="apiKey" className="label">
-            Jira API Key
-          </label>
-          <input
-            id="apiKey"
-            type="apiKey"
-            value={apiKey} onChange={e => handleApiKeyChange(e.target.value)}
-            className="input"
-            placeholder="your-api-key"
-          />
-        </div>
-      );
-    } else if (platform === 'Asana') {
-      return (
-        <div className="flex flex-col gap-y-3">
-          <label htmlFor="personalAccessToken" className="label">
-            Asana Personal Access Token
-          </label>
-          <input
-            id="personalAccessToken"
-            type="personalAccessToken"
-            value={personalAccessToken} onChange={e => handlePatChange(e.target.value)}
-            className="input"
-            placeholder="your-personal-access-token"
-          />
-          <label htmlFor="workspaceId" className="label">
-            Asana Workspace Id
-          </label>
-          <input
-            id="workspaceId"
-            type="workspaceId"
-            value={workspaceId} onChange={e => handleWorkspaceIdChange(e.target.value)}
-            className="input"
-            placeholder="your-workspace-id"
-          />
-          <label htmlFor="projectId" className="label">
-            Asana Project ID
-          </label>
-          <input
-            id="projectId"
-            type="projectId"
-            value={projectId} onChange={e => handleProjectIdChange(e.target.value)}
-            className="input"
-            placeholder="your-project-id"
-          />
-        </div>
-      );
-    } else if (platform === 'Shortcut') {
-      return (
-        <div className="flex flex-col gap-y-3">
-          <label htmlFor="apiKey" className="label">
-            Shortcut API Key
-          </label>
-          <input
-            id="apiKey"
-            type="apiKey"
-            value={apiKey} onChange={e => handleApiKeyChange(e.target.value)}
-            className="input"
-            placeholder="your-api-key"
-          />
-          <label htmlFor="projectId" className="label">
-            Shortcut Project ID
-          </label>
-          <input
-            id="projectId"
-            type="projectId"
-            value={projectId} onChange={e => handleProjectIdChange(e.target.value)}
-            className="input"
-            placeholder="your-project-id"
-          />
-        </div>
-      );
-    } else {
-      return null;
-    }
-  };
-
-  const saveButton = (email, server, apiKey, personalAccessToken, projectId, workspaceId) => {
-    return (
-      <div className="my-4">
-        <button
-          disabled={!saveButtonEnabled}
-          id="saveButton"
-          type="button"
-          onClick={() => save(email, server, apiKey, personalAccessToken, projectId, workspaceId)}
-          className={classNames(
-            saveButtonEnabled ? '' : 'btn-disabled',
-            "btn"
-          )}
-        >
-          Save
-        </button>
-      </div>
-    )
-  };
-
   return (
     <SettingsLayout>
       <div className="flex flex-col gap-y-3">
-          <label htmlFor="platform" className="label">Select
-            Platform:</label>
-          <select id="platform" name="platform" className="input" value={platform}
-                  onChange={handlePlatformChange}>
-            <option value="">Select</option>
-            <option value="Jira">Jira</option>
-            <option value="Asana">Asana</option>
-            <option value="Shortcut">Shortcut</option>
-          </select>
-
-          {renderFormFields(email, server, apiKey, personalAccessToken, projectId, workspaceId)}
-
-          {saveButton(email, server, apiKey, personalAccessToken, projectId, workspaceId)}
+        <label htmlFor="platform" className="label">Select
+          Platform:</label>
+        <select id="platform" name="platform" className="input" value={platform}
+                onChange={(e) => setPlatform(e.target.value)}>
+          <option value="">Select</option>
+          <option value="Jira">Jira</option>
+          <option value="Asana">Asana</option>
+          <option value="Shortcut">Shortcut</option>
+        </select>
+        <LinkPlatformsFields
+          apiKey={apiKey}
+          email={email}
+          personalAccessToken={personalAccessToken}
+          platform={platform}
+          projectId={projectId}
+          server={server}
+          setApiKey={setApiKey}
+          setEmail={setEmail}
+          setPat={setPat}
+          setProjectId={setProjectId}
+          setServer={setServer}
+          setWorkspaceId={setWorkspaceId}
+          workspaceId={workspaceId}
+        />
+        <div className="my-4">
+          <button
+            disabled={!saveButtonEnabled}
+            id="saveButton"
+            type="button"
+            onClick={save}
+            className={classNames(
+              saveButtonEnabled ? '' : 'btn-disabled',
+              "btn"
+            )}
+          >
+            Save
+          </button>
         </div>
+      </div>
     </SettingsLayout>
-);
+  );
 };
 
 export default LinkPlatforms;

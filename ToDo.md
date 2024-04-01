@@ -1,6 +1,5 @@
 P1:
 * app initialization layer
-  * add get user to initilization layer
   * use user info to determine apps that can be selected
 * Review upload transcript page
   * review text box PR

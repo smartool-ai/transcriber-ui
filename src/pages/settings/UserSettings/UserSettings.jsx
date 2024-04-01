@@ -39,11 +39,9 @@ const UserSettings = () => {
     const handleResetPassword = async () => {
         setPasswordResetState('fetching');
         const res = await apiRequest('/user/password-reset', { method: 'post' });
-        const data = res.json();
-        console.log('data', data)
-        setTimeout(() => {
+        if (res.status === 200) {
             setPasswordResetState('reset-complete');
-        }, 2000);
+        }
     };
 
     return (
@@ -60,29 +58,34 @@ const UserSettings = () => {
                     value={name}
                     id="name"
                   />
-                  <div>
-                      {passwordResetState === 'none' && (
-                        <button
-                          className="my-4 link"
-                          onClick={handleResetPassword}
-                        >
-                            Reset Password
-                        </button>
-                      )}
-                      {passwordResetState === 'fetching' && (
-                        <button
-                          className="my-4 link"
-                          disabled
-                        >
-                            <ButtonSpinner/>
-                        </button>
-                      )}
-                      {passwordResetState === 'reset-complete' && (
-                        <label htmlFor="name" className="my-4 label">
-                            An email has been sent to your email address with instructions to reset your password.
-                        </label>
-                      )}
-                  </div>
+                  {
+                      user.signup_method === "Username-Password-Authentication" && (
+                      <div>
+                          {passwordResetState === 'none' && (
+                            <button
+                              className="my-4 link"
+                              onClick={handleResetPassword}
+                            >
+                                Reset Password
+                            </button>
+                          )}
+                          {passwordResetState === 'fetching' && (
+                            <button
+                              className="my-4 link"
+                              disabled
+                            >
+                                <ButtonSpinner/>
+                            </button>
+                          )}
+                          {passwordResetState === 'reset-complete' && (
+                            <label htmlFor="name" className="my-4 label">
+                                An email has been sent to your email address with instructions to
+                                reset your password.
+                            </label>
+                          )}
+                      </div>
+                    )
+                  }
               </div>
               <div>
                   <button

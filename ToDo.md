@@ -1,20 +1,12 @@
 P1:
 * app initialization layer
-  * add get user to initilization layer
   * use user info to determine apps that can be selected
 * Review upload transcript page
   * review text box PR
   * review loading state
-* Add help page
-
-P2:
+* Reset password
 * Update user name, connect to BE
-* Write sample TDD
-  * input prompts and output structure
-  * What components will be affected, updated, deleted, added
-* How to reset password
 * Allow the user to link their platforms ... how?
-* What billing information do we want to add?
 * Add help page?
   * form for submitting help requests
 

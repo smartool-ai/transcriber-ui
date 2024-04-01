@@ -10,14 +10,14 @@ import {useAuth0} from "@auth0/auth0-react";
 const NavMenu = ({ setSidebarOpen }) => {
   const { logout } = useAuth0();
   const [location] = useLocation();
-  const { permissions, user } = useUserContext();
+  const { user } = useUserContext();
 
   const navItems = routeConfigs.filter((config) => (
     config.sidePanel
-    && (config.permission === true || permissions.state.includes(config.permission))
+    && (config.permission === true || user.permissions.includes(config.permission))
   ));
 
-  const settingsPath = permissions.state.includes('manage:platforms')
+  const settingsPath = user.permissions.includes('manage:platforms')
     ? '/settings/link-platforms'
     : '/settings/user-settings';
 
@@ -66,12 +66,12 @@ const NavMenu = ({ setSidebarOpen }) => {
       <div className={styles.profileAndSignOutContainer_tw}>
         <img
           className={styles.avatar_tw}
-          src={user.state.picture}
+          src={user.picture}
           alt="User Avatar"
         />
         <div className={styles.logoutContainer_tw}>
           <span className="sr-only">Your profile</span>
-          <span aria-hidden="true">{user.state.name}</span>
+          <span aria-hidden="true">{user.name}</span>
           <button
             onClick={() => logout({returnTo: window.location.origin})}
             className={styles.logoutButton_tw}

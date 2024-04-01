@@ -4,11 +4,11 @@ import routeConfigs from "../../app/routeConfigs.js";
 import {useUserContext} from "../../context/UserContext.jsx";
 
 const SettingsLayout = ({ children }) => {
-  const { permissions } = useUserContext();
+  const { user } = useUserContext();
 
   const subMenuRoutes = routeConfigs.filter((config) =>
     config.settingsNavigation
-    && (config.permission === true || permissions.state.includes(config.permission))
+    && (config.permission === true || user.permissions.includes(config.permission))
   );
 
   return (

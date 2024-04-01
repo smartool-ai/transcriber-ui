@@ -2,6 +2,8 @@ import React, {useEffect, useState} from 'react';
 import {useUserContext} from "../../../context/UserContext.jsx";
 import {classNames} from "../../../utils/tailwindUtils.js";
 import SettingsLayout from "../SettingsLayout.jsx";
+import ButtonSpinner from "../../../components/ButtonSpinner.jsx";
+import useRequest from "../../../hooks/useRequest.js";
 // import Payment from "../components/Payment";
 // import { Elements } from '@stripe/react-stripe-js';
 // import {loadStripe} from '@stripe/stripe-js';
@@ -14,14 +16,16 @@ import SettingsLayout from "../SettingsLayout.jsx";
 const UserSettings = () => {
     const { user } = useUserContext();
     const [name, setName] = useState('');
+    const [passwordResetState, setPasswordResetState] = useState('none');
+    const apiRequest = useRequest();
 
     useEffect(() => {
-        if (name !== user.state.name) {
-            setName(user.state.name)
+        if (name !== user.name) {
+            setName(user.name)
         }
-    }, [user.state]);
+    }, [user]);
 
-    const submitButtonDisabled = name === user.state.name;
+    const submitButtonDisabled = name === user.name;
 
     const handleNameChange = (e) => {
         setName(e.target.value);
@@ -30,6 +34,16 @@ const UserSettings = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         // Add your logic here to update user settings
+    };
+
+    const handleResetPassword = async () => {
+        setPasswordResetState('fetching');
+        const res = await apiRequest('/user/password-reset', { method: 'post' });
+        const data = res.json();
+        console.log('data', data)
+        setTimeout(() => {
+            setPasswordResetState('reset-complete');
+        }, 2000);
     };
 
     return (
@@ -46,7 +60,29 @@ const UserSettings = () => {
                     value={name}
                     id="name"
                   />
-                  <a className="my-4 link">Reset Password</a>
+                  <div>
+                      {passwordResetState === 'none' && (
+                        <button
+                          className="my-4 link"
+                          onClick={handleResetPassword}
+                        >
+                            Reset Password
+                        </button>
+                      )}
+                      {passwordResetState === 'fetching' && (
+                        <button
+                          className="my-4 link"
+                          disabled
+                        >
+                            <ButtonSpinner/>
+                        </button>
+                      )}
+                      {passwordResetState === 'reset-complete' && (
+                        <label htmlFor="name" className="my-4 label">
+                            An email has been sent to your email address with instructions to reset your password.
+                        </label>
+                      )}
+                  </div>
               </div>
               <div>
                   <button

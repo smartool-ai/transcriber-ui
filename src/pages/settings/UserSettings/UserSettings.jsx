@@ -20,12 +20,12 @@ const UserSettings = () => {
     const apiRequest = useRequest();
 
     useEffect(() => {
-        if (name !== user.state.name) {
-            setName(user.state.name)
+        if (name !== user.name) {
+            setName(user.name)
         }
-    }, [user.state]);
+    }, [user]);
 
-    const submitButtonDisabled = name === user.state.name;
+    const submitButtonDisabled = name === user.name;
 
     const handleNameChange = (e) => {
         setName(e.target.value);

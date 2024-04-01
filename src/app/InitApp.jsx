@@ -1,5 +1,5 @@
 import { jwtDecode } from 'jwt-decode';
-import {useEffect, useState} from "react";
+import {useState} from "react";
 import { useAuth0 } from '@auth0/auth0-react';
 import Spinner from '../components/Spinner';
 import WelcomePage from '../pages/WelcomePage';
@@ -16,25 +16,11 @@ const InitApp = () => {
   } = useAuth0();
   const apiRequest = useRequest();
 
-  const {
-    permissions,
-    token,
-    user,
-  } = useUserContext();
+  const { setUser, user } = useUserContext();
 
   const [userFetchComplete, setUserFetchComplete] = useState(false);
-  const [userToken, setUserToken] = useState();
 
-  useEffect(() => {
-    if (token.state !== userToken && !!userToken) {
-      token.setState(userToken);
-    }
-  }, [token.state, userToken])
-
-  const isInitialized =
-    !!permissions.state
-    && !!token.state
-    && !!user.state;
+  const isInitialized = !!user;
 
   if (isLoading) {
     return <Spinner/>;
@@ -46,27 +32,20 @@ const InitApp = () => {
 
   const getUserData = async () => {
     const res = await apiRequest('/user-metadata');
+    const accessToken  = await getAccessTokenSilently();
     setUserFetchComplete(true);
     if (res.status === 200) {
       const userData = await res.json();
-      user.setState({
+      setUser({
         ...auth0User,
         ...userData,
+        permissions: jwtDecode(accessToken).permissions,
       });
     }
   }
 
-  const getToken = async () => {
-    const accessToken  = await getAccessTokenSilently();
-    setUserToken(jwtDecode(accessToken));
-  }
-
-  if (auth0User && !isInitialized && !userFetchComplete && !user.state) {
+  if (auth0User && !isInitialized && !userFetchComplete) {
     getUserData();
-  }
-
-  if (auth0User && !isInitialized && !userToken) {
-    getToken();
   }
 
   if (isInitialized) {

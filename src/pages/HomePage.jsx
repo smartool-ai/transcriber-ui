@@ -6,7 +6,7 @@ export default function HomePage() {
 
 	return (
 		<div className="text-2xl font-semibold text-white">
-			{`Hello, ${user.state.name}!`}
+			{`Hello, ${user.name}!`}
 		</div>
 	)
 }

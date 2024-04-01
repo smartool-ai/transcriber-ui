@@ -85,7 +85,7 @@ export default function Layout({ current, children }) {
           <Menu.Button className="block">
             <img
               className={styles.avatar_tw}
-              src={user.state.picture}
+              src={user.picture}
               alt="User Avatar"
             />
           </Menu.Button>

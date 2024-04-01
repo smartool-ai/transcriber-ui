@@ -1,6 +1,5 @@
 P1:
-* app initialization layer
-  * use user info to determine apps that can be selected
+* use 'platforms_linked' user data to determine apps that can be selected in the upload portal
 * Review upload transcript page
   * review text box PR
   * review loading state

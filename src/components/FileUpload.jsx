@@ -1,5 +1,6 @@
 import { useCallback } from 'react';
 import { useDropzone } from 'react-dropzone';
+import { strCombine } from '../utils/tailwindUtils';
 
 
 export default function FileUpload({ uploadTranscriptFile }) {
@@ -17,8 +18,13 @@ export default function FileUpload({ uploadTranscriptFile }) {
     maxFiles: 1, // for now we only allow one upload at a time
   });
 
+  const container_tw = strCombine(
+    "mb-4 h-48 flex justify-center items-center text-gray-400 border-gray-900 border-4 border-dotted rounded-md p-4 hover:border-gray-700",
+    isDragActive ? "border-dotted border-gray-700" : ""
+  )
+
   return (
-    <div {...getRootProps()} className="mb-4 h-48 flex justify-center items-center text-gray-400 border-gray-900 border-4 border-dotted rounded-md p-4 hover:border-gray-700">
+    <div {...getRootProps()} className={container_tw}>
       <label
         htmlFor="upload"
       >
@@ -32,10 +38,11 @@ export default function FileUpload({ uploadTranscriptFile }) {
         {
           isDragActive
             ? <p>Dropping transcript...</p>
-            : (<div className="flex flex-col justify-center items-center">
-              <p>Drag and drop your transcript here or</p>
-              <button className="w-full mt-3 cursor-pointer btn text-sm">Browse</button>
-            </div>
+            : (
+              <div className="flex flex-col justify-center items-center">
+                <p>Drag and drop your transcript here or</p>
+                <button className="w-full mt-3 cursor-pointer btn text-sm">Browse</button>
+              </div>
             )
         }
       </label>

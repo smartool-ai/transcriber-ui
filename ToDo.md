@@ -1,12 +1,10 @@
 P1:
-* app initialization layer
-  * use user info to determine apps that can be selected
+* use 'platforms_linked' user data to determine apps that can be selected in the upload portal
 * Review upload transcript page
   * review text box PR
   * review loading state
-* Reset password
 * Update user name, connect to BE
-* Allow the user to link their platforms ... how?
+* Allow the user to link their platforms ... connect to BE
 * Add help page?
   * form for submitting help requests
 

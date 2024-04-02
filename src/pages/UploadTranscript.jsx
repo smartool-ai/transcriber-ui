@@ -1,4 +1,4 @@
-import { useState, useRef, useContext } from 'react';
+import { useState, useContext } from 'react';
 import useRequest from '../hooks/useRequest';
 import Spinner from '../components/Spinner';
 import Toast from '../components/Toast';
@@ -9,7 +9,6 @@ import FileUpload from '../components/FileUpload';
 
 
 export default function UploadTranscript() {
-	const fileInput = useRef(null);
 	const [isUploading, setIsUploading] = useState(false);
 	const [isExpanding, setIsExpanding] = useState(false);
 	const [isPolling, setIsPolling] = useState(false);
@@ -52,9 +51,10 @@ export default function UploadTranscript() {
 		}
 	};
 
-	const uploadTranscriptFile = async (fileName) => {
+	const uploadTranscriptFile = async (files) => {
+		const fileName = files[0].name;
 		const formData = new FormData();
-		formData.append("file", fileInput.current.files[0]);
+		formData.append("file", files[0]); // we're only allowing one file upload for now
 
 		const uploadHandler = async () => {
 			try {
@@ -301,10 +301,10 @@ export default function UploadTranscript() {
 			{toast.showToast && <Toast type={toast.type} label={toast.label} onClose={() => setToast(previous => ({ ...previous, showToast: false }))} />}
 			{uploadResponse ? (
 				<div>
-					<FileUpload uploadTranscriptFile={uploadTranscriptFile} fileInput={fileInput} />
+					<FileUpload uploadTranscriptFile={uploadTranscriptFile} />
 					<UploadedFilesTable
 						generateTickets={generateTickets}
-						response={uploadResponse}
+						files={uploadResponse.files}
 						ticketsResponse={ticketsResponse}
 						isPolling={isPolling}
 					/>
@@ -316,8 +316,8 @@ export default function UploadTranscript() {
 					
 					{fileContent && (
 						<div>
-							<h3 style={{ color: 'white' }}>File Content:</h3>
-							<pre style={{ overflow: 'auto', background: 'white', height: '200px' }}>{fileContent}</pre>
+							<h3 className="text-left text-white font-semibold py-3">File Content:</h3>
+							<pre className=" overflow-auto rounded-md h-52 bg-gray-300 p-3">{fileContent}</pre>
 						</div>
 					)}
 					{ticketsResponse && (
@@ -330,7 +330,7 @@ export default function UploadTranscript() {
 						/>
 					)}
 				</div>
-			) : <FileUpload uploadTranscriptFile={uploadTranscriptFile} fileInput={fileInput} />
+			) : <FileUpload uploadTranscriptFile={uploadTranscriptFile} />
 			}
 		</>
 	);

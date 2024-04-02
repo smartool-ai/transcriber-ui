@@ -2,10 +2,10 @@ import { useCallback } from 'react';
 import { useDropzone } from 'react-dropzone';
 
 
-export default function FileUpload({ uploadTranscriptFile, fileInput }) {
+export default function FileUpload({ uploadTranscriptFile }) {
   const onDrop = useCallback(acceptedFiles => {
     // this can support multiple files in the future
-    uploadTranscriptFile(acceptedFiles[0].name);
+    uploadTranscriptFile(acceptedFiles);
   }, []);
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
@@ -27,7 +27,6 @@ export default function FileUpload({ uploadTranscriptFile, fileInput }) {
           type="file"
           id="upload"
           name="upload"
-          ref={fileInput}
           className="sr-only"
         />
         {

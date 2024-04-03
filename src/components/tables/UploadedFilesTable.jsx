@@ -31,7 +31,7 @@ export default function UploadedFilesTable({ generateTickets, files, ticketsResp
 				{Object.entries(files).map(([index, { name, size }]) => (
 					<tr key={index}>
 						<td className="py-3 text-sm text-white pr-3">{size + " KB"}</td>
-						<td className="py-3 text-sm text-gray-500">
+						<td className="py-3 text-sm text-white">
 							<p className="font-medium">{name}</p>
 						</td>
 						{generateTicketsButton(name)}

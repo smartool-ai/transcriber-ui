@@ -1,6 +1,6 @@
 import ButtonSpinner from '../ButtonSpinner';
 
-export default function UploadedFilesTable({ generateTickets, response, ticketsResponse, isPolling }) {
+export default function UploadedFilesTable({ generateTickets, files, ticketsResponse, isPolling }) {
 	const generateTicketsButton = (name) => (
 		<td className="py-3">
 			<button
@@ -28,7 +28,7 @@ export default function UploadedFilesTable({ generateTickets, response, ticketsR
 				</tr>
 			</thead>
 			<tbody className="divide-y divide-gray-200">
-				{Object.entries(response.files).map(([index, { name, size }]) => (
+				{Object.entries(files).map(([index, { name, size }]) => (
 					<tr key={index}>
 						<td className="py-3 text-sm text-white pr-3">{size + " KB"}</td>
 						<td className="py-3 text-sm text-gray-500">

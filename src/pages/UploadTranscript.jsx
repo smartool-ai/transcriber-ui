@@ -1,20 +1,20 @@
-import { useState, useRef, useContext } from 'react';
+import { useState, useContext } from 'react';
 import useRequest from '../hooks/useRequest';
 import Spinner from '../components/Spinner';
 import Toast from '../components/Toast';
 import TicketTable from '../components/tables/TicketsTable';
 import UploadedFilesTable from '../components/tables/UploadedFilesTable';
-import * as styles from "./UploadTranscript.tailwind";
 import { UploadTranscriptContext } from '../context/UploadTranscriptContext';
+import FileUpload from '../components/FileUpload';
+
 
 export default function UploadTranscript() {
-	const fileInput = useRef(null);
 	const [isUploading, setIsUploading] = useState(false);
 	const [isExpanding, setIsExpanding] = useState(false);
 	const [isPolling, setIsPolling] = useState(false);
 	const [toast, setToast] = useState({
 		showToast: true,
-		label: "Please note that currently only .txt files are supported.",
+		label: "Please note that currently only .txt files are supported.", // Ren TODO: Update this '.txt' with files we accept on upload
 		type: "info"
 	});
 	const {
@@ -51,11 +51,10 @@ export default function UploadTranscript() {
 		}
 	};
 
-	const uploadTranscriptFile = async () => {
-		const fileName = fileInput.current.files[0].name;
-
+	const uploadTranscriptFile = async (files) => {
+		const fileName = files[0].name;
 		const formData = new FormData();
-		formData.append("file", fileInput.current.files[0]);
+		formData.append("file", files[0]); // we're only allowing one file upload for now
 
 		const uploadHandler = async () => {
 			try {
@@ -286,30 +285,13 @@ export default function UploadTranscript() {
 		}
 	};
 
-	const uploadButton = (
-		<label
-			htmlFor="upload"
-			className={styles.uploadButton_tw}
-		>
-			<span>{uploadResponse ? "Upload Another Transcript" : "Upload Transcript"}</span>
-			<input
-				type="file"
-				id="upload"
-				name="upload"
-				ref={fileInput}
-				onChange={uploadTranscriptFile}
-				className="sr-only"
-			/>
-		</label>
-	);
-
 	const handleClearAll = () => {
 		setTicketsResponse(null);
 		setUploadResponse(null);
 	};
 
 	const clearButton = (handleOnClick, buttonLabel) => (
-		<button className={styles.uploadButton_tw} onClick={handleOnClick}>
+		<button className="w-full mt-3 cursor-pointer btn text-sm" onClick={handleOnClick}>
 			{buttonLabel}
 		</button>
 	);
@@ -318,24 +300,24 @@ export default function UploadTranscript() {
 		<>
 			{toast.showToast && <Toast type={toast.type} label={toast.label} onClose={() => setToast(previous => ({ ...previous, showToast: false }))} />}
 			{uploadResponse ? (
-				<div className={styles.transcriptContainer_tw}>
+				<div>
+					<FileUpload uploadTranscriptFile={uploadTranscriptFile} />
 					<UploadedFilesTable
 						generateTickets={generateTickets}
-						response={uploadResponse}
+						files={uploadResponse.files}
 						ticketsResponse={ticketsResponse}
 						isPolling={isPolling}
 					/>
 					<div className="flex gap-3">
-						{uploadButton}
 						{!ticketsResponse && uploadResponse && clearButton(() => setUploadResponse(null), "Clear Uploaded Files")}
 						{ticketsResponse && clearButton(() => setTicketsResponse(null), "Clear Generated Tickets")}
 						{ticketsResponse && clearButton(handleClearAll, "Clear All")}
 					</div>
 					
 					{fileContent && (
-						<div className={styles.transcriptContent_tw}>
-							<h3 style={{ color: 'white' }}>File Content:</h3>
-							<pre style={{ overflow: 'auto', background: 'white', height: '200px' }}>{fileContent}</pre>
+						<div>
+							<h3 className="text-left text-white font-semibold py-3">File Content:</h3>
+							<pre className=" overflow-auto rounded-md h-52 bg-gray-300 p-3">{fileContent}</pre>
 						</div>
 					)}
 					{ticketsResponse && (
@@ -348,14 +330,8 @@ export default function UploadTranscript() {
 						/>
 					)}
 				</div>
-			) : (
-				<div className={styles.transcriptContainer_tw}>
-					<div className="text-gray-400 border-gray-900 border-4 rounded-md p-4">
-						Placeholder: Drag and Drop
-					</div>
-					{uploadButton}
-				</div>
-			)}
+			) : <FileUpload uploadTranscriptFile={uploadTranscriptFile} />
+			}
 		</>
 	);
 }

@@ -4,6 +4,7 @@ import { ArrowDownRightIcon } from '@heroicons/react/20/solid';
 import { UploadTranscriptContext } from '../../context/UploadTranscriptContext';
 import { strCombine, twConditional, twId } from '../../utils/tailwindUtils';
 import * as styles from './TicketsTable.tailwind';
+import PlatformOption from "./PlatformOption.jsx";
 
 export default function TicketTable({ expandTickets, saveTickets, isPolling, setToast, isExpanding }) {
 	const { ticketsResponse, setTicketsResponse } = useContext(UploadTranscriptContext);
@@ -23,7 +24,7 @@ export default function TicketTable({ expandTickets, saveTickets, isPolling, set
 	const handleUpdateItem = (id, subjectValue, bodyValue, pointsValue) => {
 		const itemIndex = ticketsResponse.tickets.findIndex(ticket => ticket.id === id);
 		const newTickets = [...ticketsResponse.tickets];
-		
+
 		const updatedItem = {
 			id: id,
 			subject: subjectValue,
@@ -32,7 +33,7 @@ export default function TicketTable({ expandTickets, saveTickets, isPolling, set
 			subTicketOf: newTickets[itemIndex].subTicketOf,
 			expanded: newTickets[itemIndex].expanded,
 		};
-		
+
 		newTickets[itemIndex] = updatedItem;
 		setTicketsResponse(previous => ({ ...previous, tickets: [...newTickets] }));
 		setShowEditInput(previous => !previous);
@@ -66,7 +67,7 @@ export default function TicketTable({ expandTickets, saveTickets, isPolling, set
 						{ticketsResponse && ticketsResponse.tickets && ticketsResponse.tickets.map(
 							(ticket) => (
 								<TicketRowItem
-									editItemID={editItemID}	
+									editItemID={editItemID}
 									showEditInput={showEditInput}
 									handleEditItem={handleEditItem}
 									handleUpdateItem={handleUpdateItem}
@@ -121,7 +122,7 @@ const TicketRowItem = ({
 					: subTicketOf ? <div className="flex items-center"><ArrowDownRightIcon className="h-6 w-6 mr-1"/>{subjectValue}</div> : subjectValue
 				}
 			</td>
-			<td className={strCombine(styles.tableRow_tw, "text-gray-500 w-[45%]", twConditional(subTicketOf, "pl-8"))}>
+			<td className={strCombine(styles.tableRow_tw, "text-white w-[45%]", twConditional(subTicketOf, "pl-8"))}>
 				{showEditInput && id === editItemID
 					? <textarea
 						className={styles.tableRowTextArea_tw}
@@ -131,20 +132,17 @@ const TicketRowItem = ({
 					: bodyValue
 				}
 			</td>
-			<td className={strCombine(styles.tableRow_tw, "text-gray-500 text-center w-[6%]")}>
+			<td className={strCombine(styles.tableRow_tw, "text-white text-center w-[6%]")}>
 				{showEditInput && id === editItemID
 					? <input className={styles.tableRowInput_tw} onChange={(e) => setPointsValue(e.target.value)} value={pointsValue} />
 					: pointsValue
 				}
 			</td>
-			<td className={styles.tableDataSelect_tw}>
-				<select id={id} className={styles.tableRowSelect_tw} onChange={(e) => setPlatformValue(e.target.value)} value={platformValue} >
-					<option value="">Select an option</option>
-					<option value="JIRA">Jira</option>
-					<option value="SHORTCUT">Shortcut</option>
-					<option value="ASANA">Asana</option>
-				</select>
-			</td>
+			<PlatformOption
+				id={id}
+				setPlatformValue={setPlatformValue}
+				platformValue={platformValue}
+			/>
 			<td className={styles.tableDataButtons_tw}>
 				<button
 					id={`button${id}`}

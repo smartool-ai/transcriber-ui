@@ -35,7 +35,7 @@ const UserSettings = () => {
         e.preventDefault();
         const res = await apiRequest('/user-metadata', {
             body: { name },
-            method: 'post'
+            method: 'put'
         });
         console.log(res)
         // Add your logic here to update user settings

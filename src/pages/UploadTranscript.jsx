@@ -146,6 +146,12 @@ export default function UploadTranscript() {
 							setIsPolling(false);
 							setTicketsResponse(resJson);
 							setGenerationResponse(prev => ({ ...prev, ...submitedResponseJson }))
+							setToast({
+								type: "success",
+								label: `Tickets generated successfully!`,
+								showToast: true,
+							});
+							
 							response = true;
 						} else {
 							await new Promise(resolve => setTimeout(resolve, 5000)); // Wait for 5 seconds before making the next request
@@ -190,7 +196,7 @@ export default function UploadTranscript() {
 			});
 
 			if (expandResponse && !expandResponse.ok) {
-				throw new Error('Ticket expansion failed');
+				throw new Error('Ticket expansion failed.');
 			}
 
 			const expandResponseJson = await expandResponse.json();
@@ -213,7 +219,7 @@ export default function UploadTranscript() {
 							setTicketsResponse({ tickets: consolidatedTickets });
 							setToast({
 								type: "success",
-								label: `Ticket: ${subject} has been expanded`,
+								label: `Ticket: ${subject} has been expanded.`,
 								showToast: true,
 							});
 

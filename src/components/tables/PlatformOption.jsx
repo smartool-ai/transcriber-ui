@@ -24,7 +24,7 @@ const PlatformOption = ({
       <td className={styles.tableDataSelect_tw}>
         {platformOptions.length === 0
           ? (
-            <div>
+            <div className="text-white">
               No linked platforms
             </div>
           )

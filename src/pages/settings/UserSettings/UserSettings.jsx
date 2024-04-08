@@ -37,8 +37,6 @@ const UserSettings = () => {
             body: { name },
             method: 'put'
         });
-        console.log(res)
-        // Add your logic here to update user settings
     };
 
     const handleResetPassword = async () => {

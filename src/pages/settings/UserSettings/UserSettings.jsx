@@ -31,9 +31,12 @@ const UserSettings = () => {
         setName(e.target.value);
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        // Add your logic here to update user settings
+        const res = await apiRequest('/user-metadata', {
+            body: { name },
+            method: 'put'
+        });
     };
 
     const handleResetPassword = async () => {
@@ -87,7 +90,7 @@ const UserSettings = () => {
                     )
                   }
               </div>
-              <div>
+              <div className="my-4">
                   <button
                     className={classNames(
                       submitButtonDisabled ? 'btn-disabled' : '',

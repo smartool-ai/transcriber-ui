@@ -19,7 +19,8 @@ export default function FileUpload({ uploadTranscriptFile }) {
   });
 
   const container_tw = strCombine(
-    "mb-4 h-48 flex justify-center items-center text-gray-400 border-gray-900 border-4 border-dotted rounded-md p-4 hover:border-gray-700",
+    "mb-4 h-48 flex justify-center items-center text-gray-400 border-gray-400 border-4" +
+    " border-dotted rounded-md p-4 hover:border-gray-500",
     isDragActive ? "border-dotted border-gray-700" : ""
   )
 
@@ -39,7 +40,7 @@ export default function FileUpload({ uploadTranscriptFile }) {
           isDragActive
             ? <p>Dropping transcript...</p>
             : (
-              <div className="flex flex-col justify-center items-center">
+              <div className="flex flex-col justify-center items-center text-white">
                 <p>Drag and drop your transcript here or</p>
                 <button className="w-full mt-3 cursor-pointer btn text-sm">Browse</button>
               </div>

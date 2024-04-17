@@ -41,7 +41,7 @@ const LinkPlatforms = () => {
         headers: {
           'Shortcut-Token': apiKey
         },
-        mode: 'no-cors' // skip cors
+        //mode: 'no-cors' // skip cors
       });
 
       if (workspaceResponse.status === 200) {

@@ -39,9 +39,9 @@ const LinkPlatforms = () => {
     if (shortcutWorkspaces.length === 0 && platform === 'Shortcut') {
       const workspaceResponse = await fetch('https://api.app.shortcut.com/api/v3/workflows', {
         headers: {
-          'Shortcut-Token': apiKey
-        },
-        //mode: 'no-cors' // skip cors
+          'Shortcut-Token': apiKey,
+          'Origin': 'https://app.smartool.ai',
+        }
       });
 
       if (workspaceResponse.status === 200) {

@@ -1,9 +1,13 @@
-import { useCallback } from 'react';
+import { useCallback, useEffect } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { strCombine } from '../utils/tailwindUtils';
 
 
-export default function FileUpload({ uploadTranscriptFile }) {
+export default function FileUpload({ uploadTranscriptFile, getPreviousUploads }) {
+  useEffect(() => {
+    getPreviousUploads();
+  }, []);
+  
   const onDrop = useCallback(acceptedFiles => {
     // this can support multiple files in the future
     uploadTranscriptFile(acceptedFiles);

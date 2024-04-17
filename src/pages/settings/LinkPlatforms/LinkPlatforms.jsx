@@ -52,10 +52,7 @@ const LinkPlatforms = () => {
             name: workspace.name
           });
         });
-        console.log('workspaceResponse:', workspaces)
-        console.log('Workspaces:', workspaceArray)
         setShortcutWorkspaces(workspaceArray);
-        console.log('Shortcut Workspaces:', shortcutWorkspaces);
       }
     } else {
 

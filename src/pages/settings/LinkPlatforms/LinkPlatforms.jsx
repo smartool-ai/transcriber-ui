@@ -38,9 +38,9 @@ const LinkPlatforms = () => {
     // if shortcutWorkspaces is empty, we need to fetch the workflows else workspace was selected
     if (shortcutWorkspaces.length === 0 && platform === 'Shortcut') {
       const workspaceResponse = await fetch('https://api.app.shortcut.com/api/v3/workflows', {
+        method: 'GET',
         headers: {
           'Shortcut-Token': apiKey,
-          'Origin': 'https://app.smartool.ai',
         },
         mode: 'cors',
       });

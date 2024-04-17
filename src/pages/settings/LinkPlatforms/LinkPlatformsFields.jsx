@@ -14,6 +14,7 @@ const LinkPlatformsFields = ({
   setServer,
   setWorkspaceId,
   workspaceId,
+  shortcutWorkspaces,
 }) => {
   if (platform === 'Jira') {
     return (
@@ -102,16 +103,17 @@ const LinkPlatformsFields = ({
           className="input"
           placeholder="your-api-key"
         />
-        <label htmlFor="projectId" className="label">
-          Shortcut Project ID
-        </label>
-        <input
-          id="projectId"
-          type="projectId"
-          value={projectId} onChange={e => setProjectId(e.target.value)}
-          className="input"
-          placeholder="your-project-id"
-        />
+        {shortcutWorkspaces.length > 0 && (
+          <div className="my-4">
+            <label htmlFor="workspace" className="label">Select Workspace:</label>
+            <select id="workspace" name="workspace" className="input" value={workspaceId} onChange={(e) => setWorkspaceId(e.target.value)}>
+              <option value="">Select</option>
+              {shortcutWorkspaces.map(workspace => (
+                <option key={workspace.id} value={workspace.id}>{workspace.name}</option>
+              ))}
+            </select>
+          </div>
+        )}
       </div>
     );
   }

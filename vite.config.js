@@ -15,6 +15,7 @@ export default defineConfig(({ mode }) => {
       "__REACT_APP_STRIPE_CLIENT_SECRET__": JSON.stringify(env.REACT_APP_STRIPE_CLIENT_SECRET),
       "__REACT_APP_STRIPE_PUBLIC_KEY__": JSON.stringify(env.REACT_APP_STRIPE_PUBLIC_KEY),
       "__API_URL__": JSON.stringify(env.API_URL),
+      "__REACT_APP_OPENAI_API_KEY__": JSON.stringify(env.REACT_APP_OPENAI_API_KEY),
     },
     build: {
       outDir: './dist',

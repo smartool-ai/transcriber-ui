@@ -18,6 +18,14 @@ const routeConfigs = [
     permission: 'manage:users',
   },
   {
+    name: 'TDD Generator',
+    icon: UserMinusIcon,
+    settingsNavigation: false,
+    sidePanel: true,
+    path: '/tdd',
+    permission: 'manage:upload_transcripts',
+  },
+  {
     name: 'Link Platforms',
     settingsNavigation: true,
     sidePanel: false,

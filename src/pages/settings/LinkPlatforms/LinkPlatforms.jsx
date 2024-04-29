@@ -41,7 +41,8 @@ const LinkPlatforms = () => {
         method: 'GET',
         headers: {
           'Shortcut-Token': apiKey,
-          'Access-Control-Allow-Origin': '*'
+          'Access-Control-Allow-Origin': '*',
+          'Origin': 'https://app.smartool.ai',
         },
         mode: 'cors'
       });

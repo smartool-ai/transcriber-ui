@@ -42,7 +42,8 @@ const LinkPlatforms = () => {
         headers: {
           'Shortcut-Token': apiKey,
           'Access-Control-Allow-Origin': '*'
-        }
+        },
+        mode: 'cors'
       });
 
       if (workspaceResponse.status === 200) {

@@ -41,8 +41,8 @@ const LinkPlatforms = () => {
         method: 'GET',
         headers: {
           'Shortcut-Token': apiKey,
-        },
-        mode: 'cors',
+          'Access-Control-Allow-Origin': '*'
+        }
       });
 
       if (workspaceResponse.status === 200) {

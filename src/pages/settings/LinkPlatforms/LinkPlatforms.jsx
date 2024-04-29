@@ -37,7 +37,7 @@ const LinkPlatforms = () => {
     // if platform is Shortcut we need to check if the api key has access to valid workflows
     // if shortcutWorkspaces is empty, we need to fetch the workflows else workspace was selected
     if (shortcutWorkspaces.length === 0 && platform === 'Shortcut') {
-      const workspaceResponse = await apiRequest('/shorcut/workflows', {
+      const workspaceResponse = await apiRequest(`/shortcut/workflows?api_key=${apiKey}`, {
         method: 'GET'
       });
 

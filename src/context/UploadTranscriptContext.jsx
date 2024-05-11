@@ -9,6 +9,8 @@ export const UploadTranscriptContext = createContext({
 	setFileContent: null,
 	workspaceOrProjectIds: [],
 	setWorkspaceOrProjectIds: null,
+	allUploads: {},
+	setAllUploads: null
 });
 
 export function UploadTranscriptContextProvider({ children }) {
@@ -17,6 +19,7 @@ export function UploadTranscriptContextProvider({ children }) {
 	const [ticketsResponse, setTicketsResponse] = useState(null);
 	const [fileContent, setFileContent] = useState(null);
 	const [workspaceOrProjectIds, setWorkspaceOrProjectIds] = useState([]);
+	const [allUploads, setAllUploads] = useState(null);
 
 	return (
 		<UploadTranscriptContext.Provider value={{
@@ -30,6 +33,8 @@ export function UploadTranscriptContextProvider({ children }) {
 			setFileContent,
 			workspaceOrProjectIds,
 			setWorkspaceOrProjectIds,
+			allUploads,
+			setAllUploads
 		}}>
 			{children}
 		</UploadTranscriptContext.Provider>

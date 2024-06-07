@@ -6,6 +6,7 @@ import TicketTable from '../components/tables/TicketsTable';
 import UploadedFilesTable from '../components/tables/UploadedFilesTable';
 import { UploadTranscriptContext } from '../context/UploadTranscriptContext';
 import FileUpload from '../components/FileUpload';
+import { getTimestampFromFilename } from '../utils/getTimestamp';
 
 
 export default function UploadTranscript() {
@@ -145,6 +146,10 @@ export default function UploadTranscript() {
 		if (res.status === 200) {
 			const allUploadsLocal = await res.json();
 			const files = allUploadsLocal.documents;
+
+			// sort by datetime, recent at the bottom
+			files.sort((a, b) => getTimestampFromFilename(a.name) - getTimestampFromFilename(b.name))
+
 			setAllUploads({ ...files })
 			return files
 		} else {
@@ -363,16 +368,17 @@ export default function UploadTranscript() {
 							<pre className=" overflow-auto rounded-md h-52 bg-gray-300 p-3">{fileContent.fileContent}</pre>
 						</div>
 					)}
-					{ticketsResponse && (
-						<TicketTable
-							expandTickets={expandTickets}
-							saveTickets={saveTickets}
-							isPolling={isPolling}
-							setToast={setToast}
-							isExpanding={isExpanding}
-						/>
-					)}
 				</div>
+			)}
+			<hr />
+			{ticketsResponse && (
+				<TicketTable
+					expandTickets={expandTickets}
+					saveTickets={saveTickets}
+					isPolling={isPolling}
+					setToast={setToast}
+					isExpanding={isExpanding}
+				/>
 			)}
 		</>
 	);

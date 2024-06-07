@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import useRequest from '../hooks/useRequest';
 import Spinner from '../components/Spinner';
 import Toast from '../components/Toast';
@@ -6,6 +6,7 @@ import TicketTable from '../components/tables/TicketsTable';
 import UploadedFilesTable from '../components/tables/UploadedFilesTable';
 import { UploadTranscriptContext } from '../context/UploadTranscriptContext';
 import FileUpload from '../components/FileUpload';
+import { getTimestampFromFilename } from '../utils/getTimestamp';
 
 
 export default function UploadTranscript() {
@@ -26,8 +27,12 @@ export default function UploadTranscript() {
 		setUploadResponse,
 		fileContent,
 		setFileContent,
+		allUploads,
+		setAllUploads
 	} = useContext(UploadTranscriptContext);
 	const apiRequest = useRequest();
+
+	useEffect(() => { getPreviousUploads() }, [])
 
 	if (isUploading) {
 		return <Spinner />;
@@ -41,7 +46,7 @@ export default function UploadTranscript() {
 
 		if (res.status === 200) {
 			const fileContent = await res.json();
-			setFileContent(fileContent.content);
+			setFileContent({ fileName: fileName, fileContent: fileContent.content});
 		} else {
 			setToast({
 				type: "error",
@@ -53,8 +58,23 @@ export default function UploadTranscript() {
 
 	const uploadTranscriptFile = async (files) => {
 		const fileName = files[0].name;
+		const fileSize = files[0].size;
 		const formData = new FormData();
 		formData.append("file", files[0]); // we're only allowing one file upload for now
+
+		if (fileSize > 1024 * 1024) {
+			setToast({
+				type: "error",
+				label: "File size exceeds the limit of 1MB.",
+				showToast: true,
+			});
+		} else if (fileSize < 2 * 1024) {
+			setToast({
+				type: "error",
+				label: "File size is below the minimum limit of 2KB.",
+				showToast: true,
+			});
+		}
 
 		const uploadHandler = async () => {
 			try {
@@ -70,6 +90,9 @@ export default function UploadTranscript() {
 				setIsUploading(false);
 				const uploadResponseLocal = await apiUploadResponse.json();
 				setUploadResponse(uploadResponseLocal);
+
+				const previousFiles = await getPreviousUploads()
+				setAllUploads({ ...previousFiles })
 				setToast({
 					type: "success",
 					label: "Your transcript has been uploaded!",
@@ -115,6 +138,25 @@ export default function UploadTranscript() {
 		}
 	};
 
+	const getPreviousUploads = async () => {
+		const res = await apiRequest(`/files`, {
+			method: "get",
+		});
+
+		if (res.status === 200) {
+			const allUploadsLocal = await res.json();
+			const files = allUploadsLocal.documents;
+
+			// sort by datetime, recent at the bottom
+			files.sort((a, b) => getTimestampFromFilename(a.name) - getTimestampFromFilename(b.name))
+
+			setAllUploads({ ...files })
+			return files
+		} else {
+			console.log("User has no previous uploads.")
+		}
+	};
+
 	const generateTickets = async (fileName) => {
 		try {
 			setIsPolling(true);
@@ -146,6 +188,12 @@ export default function UploadTranscript() {
 							setIsPolling(false);
 							setTicketsResponse(resJson);
 							setGenerationResponse(prev => ({ ...prev, ...submitedResponseJson }))
+							setToast({
+								type: "success",
+								label: `Tickets generated successfully!`,
+								showToast: true,
+							});
+
 							response = true;
 						} else {
 							await new Promise(resolve => setTimeout(resolve, 5000)); // Wait for 5 seconds before making the next request
@@ -190,7 +238,7 @@ export default function UploadTranscript() {
 			});
 
 			if (expandResponse && !expandResponse.ok) {
-				throw new Error('Ticket expansion failed');
+				throw new Error('Ticket expansion failed.');
 			}
 
 			const expandResponseJson = await expandResponse.json();
@@ -213,7 +261,7 @@ export default function UploadTranscript() {
 							setTicketsResponse({ tickets: consolidatedTickets });
 							setToast({
 								type: "success",
-								label: `Ticket: ${subject} has been expanded`,
+								label: `Ticket: ${subject} has been expanded.`,
 								showToast: true,
 							});
 
@@ -299,39 +347,39 @@ export default function UploadTranscript() {
 	return (
 		<>
 			{toast.showToast && <Toast type={toast.type} label={toast.label} onClose={() => setToast(previous => ({ ...previous, showToast: false }))} />}
-			{uploadResponse ? (
+			<FileUpload uploadTranscriptFile={uploadTranscriptFile} />
+			{allUploads && (<UploadedFilesTable
+				generateTickets={generateTickets}
+				files={allUploads}
+				ticketsResponse={ticketsResponse}
+				isPolling={isPolling}
+			/>)}
+			{uploadResponse && (
 				<div>
-					<FileUpload uploadTranscriptFile={uploadTranscriptFile} />
-					<UploadedFilesTable
-						generateTickets={generateTickets}
-						files={uploadResponse.files}
-						ticketsResponse={ticketsResponse}
-						isPolling={isPolling}
-					/>
 					<div className="flex gap-3">
 						{!ticketsResponse && uploadResponse && clearButton(() => setUploadResponse(null), "Clear Uploaded Files")}
 						{ticketsResponse && clearButton(() => setTicketsResponse(null), "Clear Generated Tickets")}
 						{ticketsResponse && clearButton(handleClearAll, "Clear All")}
 					</div>
-					
+
 					{fileContent && (
 						<div>
-							<h3 className="text-left text-white font-semibold py-3">File Content:</h3>
-							<pre className=" overflow-auto rounded-md h-52 bg-gray-300 p-3">{fileContent}</pre>
+							<h3 className="text-left text-white font-semibold py-3">File Content for {fileContent.fileName}</h3>
+							<pre className=" overflow-auto rounded-md h-52 bg-gray-300 p-3">{fileContent.fileContent}</pre>
 						</div>
 					)}
-					{ticketsResponse && (
-						<TicketTable
-							expandTickets={expandTickets}
-							saveTickets={saveTickets}
-							isPolling={isPolling}
-							setToast={setToast}
-							isExpanding={isExpanding}
-						/>
-					)}
 				</div>
-			) : <FileUpload uploadTranscriptFile={uploadTranscriptFile} />
-			}
+			)}
+			<hr />
+			{ticketsResponse && (
+				<TicketTable
+					expandTickets={expandTickets}
+					saveTickets={saveTickets}
+					isPolling={isPolling}
+					setToast={setToast}
+					isExpanding={isExpanding}
+				/>
+			)}
 		</>
 	);
 }
